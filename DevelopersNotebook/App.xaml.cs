@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
+using System.Windows.Threading;
+using Castle.Windsor;
+using Castle.Windsor.Installer;
+using DevelopersNotebook.Infrastructure.Logging;
+using DevelopersNotebook.StartUp;
 
 namespace DevelopersNotebook
 {
@@ -13,5 +14,56 @@ namespace DevelopersNotebook
   /// </summary>
   public partial class App : Application
   {
+    private WindsorContainer container;
+    private TimeTrackerInitialization appInit;
+
+    public App()
+    {
+      ArrangeLogger();
+    }
+
+    private void ArrangeLogger()
+    {
+      // Log files are session-wise
+      Logger.Setup(Path.Combine(
+        "Logs", $"TaskTracker{DateTime.Now:dd-MM-yyyy-HH-mm-ss}LogEvents.txt"));
+    }
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+      container = new WindsorContainer();
+      container.Install(FromAssembly.This());
+      appInit = container.Resolve<TimeTrackerInitialization>();
+
+      // prepare view-models before showing main window
+      appInit.InitializeBeforeShowingTheWindow();
+      appInit.ShowWindow();
+
+      // to have the ability to show messages, we must have main Window shown
+      // hence attach central error handler after the window is displayed
+      DispatcherUnhandledException += App_DispatcherUnhandledException;
+      appInit.InitializeAfterShowingTheWindow();
+    }
+
+    private void App_DispatcherUnhandledException(
+      object sender,
+      DispatcherUnhandledExceptionEventArgs e)
+    {
+      appInit.LogAndDisplayError(
+        $"Непредвиденная ошибка: {e.Exception.Message}");
+      appInit.Dispose();
+
+      //handle error, otherwise Windows will complain
+      e.Handled = true;
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+      base.OnExit(e);
+      if (container == null)
+        return;
+      container.Release(appInit);
+      container.Dispose();
+    }
   }
 }

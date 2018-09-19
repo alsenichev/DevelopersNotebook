@@ -3,10 +3,69 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mainWindowViewModels="clr-namespace:ViewModel.MainWindowVMs;assembly=ViewModel"
         xmlns:local="clr-namespace:DevelopersNotebook"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Task Tracker" Height="300" Width="625"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance mainWindowViewModels:MainWindowVM}">
+    <Grid Margin="11">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Menu HorizontalAlignment="Left">
+      <MenuItem>
+        <MenuItem.Header>
+          <Path
+                        Stretch="Fill"
+                        Width="15"
+                        Height="15"
+                        Margin="3"
+                        Fill="{StaticResource IconsNeutral}"
+                        Data="{StaticResource Menu}" />
+        </MenuItem.Header>
+        <Separator />
+        <MenuItem Header="Settings">
+          <MenuItem.Icon>
+            <Path
+                            Stretch="Fill"
+                            Width="15"
+                            Height="15"
+                            Fill="{StaticResource IconsNeutral}"
+                            Data="{StaticResource Gear}" />
+          </MenuItem.Icon>
+        </MenuItem>
+      </MenuItem>
+    </Menu>
+    <Grid
+            Grid.Row="1"
+            Margin="0,0,0,11"
+            DataContext="{Binding UpperPanelVM}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="4*" />
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <TextBox Grid.Column="0"
+                       Text="Write something here"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+      <TextBlock Grid.Column="1"
+                       Text="{Binding Timer}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="32"
+                       Foreground="{StaticResource IconsNeutral}" />
+      <Button
+                Height="50"
+                Width="50"
+                Grid.Column="2"
+                Margin="11"
+                Command="{Binding ToggleTimer}"
+                Content="{Binding IsTimerRunning, Converter={StaticResource BoolToIconConverter}}" />
     </Grid>
+  </Grid>
 </Window>
+ 
