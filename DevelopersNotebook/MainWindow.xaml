@@ -4,51 +4,102 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mainWindowViewModels="clr-namespace:ViewModel.MainWindowVMs;assembly=ViewModel"
-        xmlns:local="clr-namespace:DevelopersNotebook"
         mc:Ignorable="d"
         Title="Task Tracker" Height="300" Width="625"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance mainWindowViewModels:MainWindowVM}">
     <Grid Margin="11">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
-    <Menu Grid.Row="0" HorizontalAlignment="Left">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+    <Menu
+      Grid.Row="0"
+      Grid.Column="0"
+      HorizontalAlignment="Left">
       <MenuItem>
         <MenuItem.Header>
           <Path
-                        Stretch="Fill"
-                        Width="15"
-                        Height="15"
-                        Margin="3"
-                        Fill="{StaticResource IconsNeutral}"
-                        Data="{StaticResource Menu}" />
+            Stretch="Fill"
+            Width="15"
+            Height="15"
+            Margin="3"
+            Fill="{StaticResource IconsNeutral}"
+            Data="{StaticResource Menu}" />
         </MenuItem.Header>
-        <MenuItem Header="Settings">
-          <MenuItem.Icon>
-            <Path
-                            Stretch="Fill"
-                            Width="15"
-                            Height="15"
-                            Fill="{StaticResource IconsNeutral}"
-                            Data="{StaticResource Gear}" />
-          </MenuItem.Icon>
-        </MenuItem>
+      <MenuItem Header="Settings">
+        <MenuItem.Icon>
+          <Path
+            Stretch="Fill"
+            Width="15"
+            Height="15"
+            Fill="{StaticResource IconsNeutral}"
+            Data="{StaticResource Gear}" />
+        </MenuItem.Icon>
+      </MenuItem>
       </MenuItem>
     </Menu>
-      <ListBox
-        Grid.Row="1"
-        DataContext="{Binding CentralPanelVM}"
-        HorizontalContentAlignment="Stretch"
-        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-        ScrollViewer.VerticalScrollBarVisibility="Auto"
-        ItemsSource="{Binding Notes}"/>
+    <TextBlock 
+      Grid.Row="0"
+      Grid.Column="1"
+      DataContext="{Binding TotalCounterVM}"
+      HorizontalAlignment="Right"
+      FontSize="20"
+      Foreground="{StaticResource IconsNeutral}"
+      Text="{Binding TotalTime}"/>
+    <ListBox
+      Grid.Row="1"
+      Grid.Column="0"
+      Grid.ColumnSpan="2"
+      DataContext="{Binding CentralPanelVM}"
+      HorizontalContentAlignment="Stretch"
+      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ItemsSource="{Binding Notes}">
+      <!--position items bottom-up-->
+      <!--<ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel VerticalAlignment="Bottom"/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>-->
+      <ListBox.ItemContainerStyle>
+        <Style TargetType="ListBoxItem">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="ListBoxItem">
+                <Border
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  Background="{TemplateBinding Background}"
+                  Margin="{TemplateBinding Padding}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter
+                  HorizontalAlignment="{TemplateBinding
+                  HorizontalContentAlignment}"
+                  VerticalAlignment="{TemplateBinding 
+                  VerticalContentAlignment}" />
+                </Border>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+          <Setter Property="Background" Value="Transparent" />
+          <Setter Property="Margin" Value="0,0,0,0"/>
+          <Setter Property="BorderThickness" Value="2" />
+          <Setter Property="BorderBrush" Value="Transparent" />
+          <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        </Style>
+      </ListBox.ItemContainerStyle>
+    </ListBox>
     <Grid
-            Grid.Row="2"
-            Margin="0,0,0,11"
-            DataContext="{Binding BottomPanelVM}">
+      Grid.Row="2"
+      Grid.Column="0"
+      Grid.ColumnSpan="2"
+      Margin="0,0,0,11"
+      DataContext="{Binding BottomPanelVM}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition Width="Auto"/>
@@ -56,7 +107,7 @@
       </Grid.ColumnDefinitions>
       <TextBox Grid.Column="0"/>
       <TextBlock Grid.Column="1"
-                       Text="{Binding Timer}"
+                       Text="{Binding TimerTime}"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        FontSize="28"

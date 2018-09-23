@@ -55,8 +55,10 @@
     <Compile Include="MainWindowVMs\CentralPanelVM.cs" />
     <Compile Include="MainWindowVMs\ICentralPanelVM.cs" />
     <Compile Include="MainWindowVMs\IBottomPanelVM.cs" />
+    <Compile Include="MainWindowVMs\ITotalCounterVM.cs" />
     <Compile Include="MainWindowVMs\MainWindowVM.cs" />
     <Compile Include="MainWindowVMs\BottomPanelVM.cs" />
+    <Compile Include="MainWindowVMs\TotalCounterVM.cs" />
     <Compile Include="ModelsVMs\NoteVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

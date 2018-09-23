@@ -18,6 +18,13 @@ namespace ViewModel.MainWindowVMs
 
     #endregion
 
+    #region events
+
+    public event EventHandler<EventArgs> TimerStarted;
+
+    public event EventHandler<TimeSpan> TimerStopped;
+    #endregion
+
     private bool CanToggleTimer()
     {
       return true;
@@ -26,15 +33,23 @@ namespace ViewModel.MainWindowVMs
     private void ExecuteToggleTimer()
     {
       if (dispatcherTimer.IsEnabled)
+      {
         dispatcherTimer.Stop();
+        TimerStopped?.Invoke(this, timer.Elapsed);
+        timer.Reset();
+        OnPropertyChanged(nameof(TimerTime));
+      }
       else
+      {
         dispatcherTimer.Start();
+        TimerStarted?.Invoke(this, EventArgs.Empty);
+      }
       OnPropertyChanged(nameof(IsTimerRunning));
     }
 
     #region public properties
 
-    public string Timer => timer.Elapsed.ToString();
+    public string TimerTime => timer.Elapsed.ToString();
 
     public ICommand ToggleTimer =>
       toggleTimer ??
@@ -57,7 +72,7 @@ namespace ViewModel.MainWindowVMs
     private void DispatcherTimerOnTick(object sender, EventArgs eventArgs)
     {
       timer.Increment(timerStep);
-      OnPropertyChanged(nameof(Timer));
+      OnPropertyChanged(nameof(TimerTime));
     }
 
     #endregion
