@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using CookbookMVVM;
 using Domain.Interfaces;
+using Domain.Services;
 
 namespace ViewModel.MainWindowVMs
 {
@@ -10,8 +11,9 @@ namespace ViewModel.MainWindowVMs
   {
     #region private fields
 
-    private readonly DispatcherTimer timer;
-    private readonly ITimeProvider timeProvider;
+    private readonly DispatcherTimer dispatcherTimer;
+    private readonly TimeSpan timerStep = TimeSpan.FromSeconds(1);
+    private readonly Timer timer;
     private ICommand toggleTimer;
 
     #endregion
@@ -23,33 +25,39 @@ namespace ViewModel.MainWindowVMs
 
     private void ExecuteToggleTimer()
     {
-      if (timer.IsEnabled)
-        timer.Stop();
+      if (dispatcherTimer.IsEnabled)
+        dispatcherTimer.Stop();
       else
-        timer.Start();
+        dispatcherTimer.Start();
       OnPropertyChanged(nameof(IsTimerRunning));
     }
 
     #region public properties
 
-    public string Timer => "-01:00";
+    public string Timer => timer.Elapsed.ToString();
 
     public ICommand ToggleTimer =>
       toggleTimer ??
       (toggleTimer = new RelayCommand(ExecuteToggleTimer, CanToggleTimer));
 
-    public bool IsTimerRunning => timer.IsEnabled;
+    public bool IsTimerRunning => dispatcherTimer.IsEnabled;
 
     #endregion
 
     #region public methods
 
-    public UpperPanelVM(ITimeProvider timeProvider)
+    public UpperPanelVM()
     {
-      this.timeProvider = timeProvider;
-      timer = new DispatcherTimer
-        {Interval = TimeSpan.FromSeconds(1)};
-      timer.Tick += delegate { OnPropertyChanged(nameof(Timer)); };
+      timer = new Timer();
+      dispatcherTimer = new DispatcherTimer
+        {Interval = timerStep};
+      dispatcherTimer.Tick += DispatcherTimerOnTick;
+    }
+
+    private void DispatcherTimerOnTick(object sender, EventArgs eventArgs)
+    {
+      timer.Increment(timerStep);
+      OnPropertyChanged(nameof(Timer));
     }
 
     #endregion
