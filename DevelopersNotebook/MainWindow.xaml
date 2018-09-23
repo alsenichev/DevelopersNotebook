@@ -92,14 +92,19 @@
       Grid.Row="2"
       Grid.Column="0"
       Grid.ColumnSpan="2"
-      Margin="0,0,0,11"
+      Margin="0,11,0,11"
       DataContext="{Binding BottomPanelVM}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <TextBox Grid.Column="0" Text="{Binding TextInput}"/>
+      <TextBox
+        Grid.Column="0"
+        Margin="0,0,11,0"
+        TextWrapping="Wrap"
+        Text="{Binding TextInput}"
+        FontSize="18"/>
       <TextBlock Grid.Column="1"
                        Text="{Binding TimerTime}"
                        HorizontalAlignment="Right"
@@ -107,11 +112,12 @@
                        FontSize="28"
                        Foreground="{StaticResource IconsNeutral}" />
       <Button
-                Grid.Column="2"
-        Width="35" Height="35"
-                Margin="11"
-                Command="{Binding ToggleTimer}"
-                Content="{Binding IsTimerRunning, Converter={StaticResource BoolToIconConverter}}" />
+        Grid.Column="2"
+        Width="35"
+        Height="35"
+        Margin="11"
+        Command="{Binding ToggleTimer}"
+        Content="{Binding IsTimerRunning, Converter={StaticResource BoolToIconConverter}}" />
     </Grid>
   </Grid>
 </Window>
