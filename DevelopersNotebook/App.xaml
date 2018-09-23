@@ -12,6 +12,7 @@
         <ResourceDictionary Source="ResourceDictionaries/Buttons.xaml"/>
         <ResourceDictionary Source="ResourceDictionaries/DataGridStyle.xaml" />
         <ResourceDictionary Source="ResourceDictionaries/Converters.xaml"/>
+        <ResourceDictionary Source="DataTemplates/NoteView.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -38,13 +38,17 @@
         </MenuItem>
       </MenuItem>
     </Menu>
-      <StackPanel Grid.Row="1">
-
-      </StackPanel>
+      <ListBox
+        Grid.Row="1"
+        DataContext="{Binding CentralPanelVM}"
+        HorizontalContentAlignment="Stretch"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
+        ItemsSource="{Binding Notes}"/>
     <Grid
             Grid.Row="2"
             Margin="0,0,0,11"
-            DataContext="{Binding UpperPanelVM}">
+            DataContext="{Binding BottomPanelVM}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition Width="Auto"/>

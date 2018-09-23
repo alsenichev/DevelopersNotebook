@@ -7,7 +7,7 @@ using Domain.Services;
 
 namespace ViewModel.MainWindowVMs
 {
-  public class UpperPanelVM : ViewModelBase, IUpperPanelVM
+  public class BottomPanelVM : ViewModelBase, IBottomPanelVM
   {
     #region private fields
 
@@ -46,7 +46,7 @@ namespace ViewModel.MainWindowVMs
 
     #region public methods
 
-    public UpperPanelVM()
+    public BottomPanelVM()
     {
       timer = new Timer();
       dispatcherTimer = new DispatcherTimer

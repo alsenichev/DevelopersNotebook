@@ -52,9 +52,12 @@
   <ItemGroup>
     <Compile Include="Infrastructure\Logging\ITimeTrackerLogger.cs" />
     <Compile Include="Infrastructure\Logging\TimeTrackerLogger.cs" />
-    <Compile Include="MainWindowVMs\IUpperPanelVM.cs" />
+    <Compile Include="MainWindowVMs\CentralPanelVM.cs" />
+    <Compile Include="MainWindowVMs\ICentralPanelVM.cs" />
+    <Compile Include="MainWindowVMs\IBottomPanelVM.cs" />
     <Compile Include="MainWindowVMs\MainWindowVM.cs" />
-    <Compile Include="MainWindowVMs\UpperPanelVM.cs" />
+    <Compile Include="MainWindowVMs\BottomPanelVM.cs" />
+    <Compile Include="ModelsVMs\NoteVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

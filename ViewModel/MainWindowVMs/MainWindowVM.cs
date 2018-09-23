@@ -4,13 +4,17 @@ namespace ViewModel.MainWindowVMs
 {
   public class MainWindowVM : ViewModelBase
   {
-    private readonly IUpperPanelVM upperPanelVM;
+    private readonly IBottomPanelVM bottomPanelVM;
+    private readonly ICentralPanelVM centralPanelVM;
 
-    public MainWindowVM(IUpperPanelVM upperPanelVM)
+    public MainWindowVM(IBottomPanelVM bottomPanelVM, ICentralPanelVM centralPanelVM)
     {
-      this.upperPanelVM = upperPanelVM;
+      this.bottomPanelVM = bottomPanelVM;
+      this.centralPanelVM = centralPanelVM;
     }
 
-    public IUpperPanelVM UpperPanelVM => upperPanelVM;
+    public IBottomPanelVM BottomPanelVM => bottomPanelVM;
+
+    public ICentralPanelVM CentralPanelVM => centralPanelVM;
   }
 }

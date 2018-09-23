@@ -40,6 +40,9 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="CookbookMVVM, Version=1.0.10.0, Culture=neutral, PublicKeyToken=2e0426e10ec346e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\CookbookMVVM.1.0.10.0\lib\net45\CookbookMVVM.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -69,6 +72,10 @@
     <Compile Include="Infrastructure\DependencyInjection\DomainInstaller.cs" />
     <Compile Include="StartUp\TimeTrackerInitialization.cs" />
     <Compile Include="UserControls\SvgIcon.xaml.cs" />
+    <Page Include="DataTemplates\NoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -138,6 +145,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{50ba9ce9-e73f-4f1b-b0a0-44daaa89c5f3}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModel\ViewModel.csproj">
       <Project>{0F635DA5-3AB7-47C7-AFEF-B28BA34F918F}</Project>
       <Name>ViewModel</Name>

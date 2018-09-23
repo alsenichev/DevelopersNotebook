@@ -3,7 +3,7 @@ using CsUtil;
 
 namespace ViewModel.MainWindowVMs
 {
-  public interface IUpperPanelVM
+  public interface IBottomPanelVM
   {
     string Timer { get; }
 
