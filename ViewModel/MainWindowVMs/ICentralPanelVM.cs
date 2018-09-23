@@ -8,7 +8,7 @@ namespace ViewModel.MainWindowVMs
   {
     ObservableCollection<NoteVM> Notes { get; }
 
-    void AddTimerNote(object sender, EventArgs e);
+    void AddTimerNote(object sender, string e);
 
     void EndTimerNote(object sender, TimeSpan e);
   }

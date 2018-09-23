@@ -14,11 +14,11 @@ namespace ViewModel.MainWindowVMs
 
     public ObservableCollection<NoteVM> Notes => notes;
 
-    public void AddTimerNote(object sender, EventArgs e)
+    public void AddTimerNote(object sender, string e)
     {
       notes.Add(new NoteVM()
       {
-        Model=new Note($"Current time is {timeProvider.Now}", "The task")
+        Model=new Note($"Current time is {timeProvider.Now}", e)
       });
       OnPropertyChanged(nameof(Notes));
     }

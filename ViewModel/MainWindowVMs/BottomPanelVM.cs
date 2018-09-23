@@ -20,7 +20,7 @@ namespace ViewModel.MainWindowVMs
 
     #region events
 
-    public event EventHandler<EventArgs> TimerStarted;
+    public event EventHandler<string> TimerStarted;
 
     public event EventHandler<TimeSpan> TimerStopped;
     #endregion
@@ -42,7 +42,9 @@ namespace ViewModel.MainWindowVMs
       else
       {
         dispatcherTimer.Start();
-        TimerStarted?.Invoke(this, EventArgs.Empty);
+        TimerStarted?.Invoke(this, string.IsNullOrWhiteSpace(TextInput)?"The task":TextInput);
+        TextInput = "";
+        OnPropertyChanged(TextInput);
       }
       OnPropertyChanged(nameof(IsTimerRunning));
     }
@@ -50,6 +52,8 @@ namespace ViewModel.MainWindowVMs
     #region public properties
 
     public string TimerTime => timer.Elapsed.ToString();
+
+    public string TextInput { get; set; }
 
     public ICommand ToggleTimer =>
       toggleTimer ??
