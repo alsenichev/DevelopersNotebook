@@ -5,15 +5,15 @@
     <userControls:SvgIcon x:Key="PlayIcon"
                           DataGeometry="{StaticResource Play}"
                           ShapeFill="{StaticResource IconsNeutral}"
-                          IconWidth="30"
-                          IconHeight="30"
+                          IconWidth="20"
+                          IconHeight="20"
                           Margin="5,3,1,3" />
 
     <userControls:SvgIcon x:Key="PauseIcon"
                           DataGeometry="{StaticResource Pause}"
                           ShapeFill="{StaticResource IconsNeutral}"
-                          IconWidth="25"
-                          IconHeight="25"
+                          IconWidth="15"
+                          IconHeight="15"
                           Margin="3" />
 
 </ResourceDictionary>
