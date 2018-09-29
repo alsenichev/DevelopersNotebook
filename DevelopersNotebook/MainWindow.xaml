@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mainWindowViewModels="clr-namespace:ViewModel.MainWindowVMs;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="Task Tracker" Height="500" Width="625"
+        Title="Developer's Notebook" Height="500" Width="625"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance mainWindowViewModels:MainWindowVM}">
     <Grid Margin="11">
@@ -14,39 +14,9 @@
         <RowDefinition />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition />
-      </Grid.ColumnDefinitions>
-    <Menu
-      Grid.Row="0"
-      Grid.Column="0"
-      HorizontalAlignment="Left">
-      <MenuItem>
-        <MenuItem.Header>
-          <Path
-            Stretch="Fill"
-            Width="15"
-            Height="15"
-            Margin="3"
-            Fill="{StaticResource IconsNeutral}"
-            Data="{StaticResource Menu}" />
-        </MenuItem.Header>
-      <MenuItem Header="Settings">
-        <MenuItem.Icon>
-          <Path
-            Stretch="Fill"
-            Width="15"
-            Height="15"
-            Fill="{StaticResource IconsNeutral}"
-            Data="{StaticResource Gear}" />
-        </MenuItem.Icon>
-      </MenuItem>
-      </MenuItem>
-    </Menu>
     <TextBlock 
       Grid.Row="0"
-      Grid.Column="1"
+      Grid.Column="0"
       DataContext="{Binding TotalCounterVM}"
       HorizontalAlignment="Right"
       FontSize="20"
@@ -55,7 +25,6 @@
     <ListBox
       Grid.Row="1"
       Grid.Column="0"
-      Grid.ColumnSpan="2"
       DataContext="{Binding CentralPanelVM}"
       HorizontalContentAlignment="Stretch"
       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -91,33 +60,25 @@
     <Grid
       Grid.Row="2"
       Grid.Column="0"
-      Grid.ColumnSpan="2"
       Margin="0,11,0,11"
       DataContext="{Binding BottomPanelVM}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
-        <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <TextBox
-        Grid.Column="0"
-        Margin="0,0,11,0"
-        TextWrapping="Wrap"
+      <ComboBox
+        Margin="0,0,7,0"
+        ItemsSource="{Binding Captions}"
         Text="{Binding TextInput}"
-        FontSize="18"/>
+        TabIndex="0"
+        IsEditable="true"
+        PreviewKeyDown="MainText_OnPreviewKeyDown"
+        ToolTip="ENTER - режим навигации" />
       <TextBlock Grid.Column="1"
                        Text="{Binding TimerTime}"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
-                       FontSize="28"
                        Foreground="{StaticResource IconsNeutral}" />
-      <Button
-        Grid.Column="2"
-        Width="35"
-        Height="35"
-        Margin="11"
-        Command="{Binding ToggleTimer}"
-        Content="{Binding IsTimerRunning, Converter={StaticResource BoolToIconConverter}}" />
     </Grid>
   </Grid>
 </Window>

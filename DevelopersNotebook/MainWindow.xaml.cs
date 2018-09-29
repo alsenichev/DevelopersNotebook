@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 using ViewModel.MainWindowVMs;
 
 namespace DevelopersNotebook
@@ -9,9 +10,11 @@ namespace DevelopersNotebook
   /// </summary>
   public partial class MainWindow : Window
   {
+    private MainWindowVM mainWindowVM;
     public MainWindow(MainWindowVM mainWindowVM)
     {
       DataContext = mainWindowVM;
+      this.mainWindowVM = mainWindowVM;
       InitializeComponent();
     }
 
@@ -19,6 +22,11 @@ namespace DevelopersNotebook
     {
       base.OnClosed(e);
       Application.Current.Shutdown();
+    }
+
+    private void MainText_OnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+      mainWindowVM.BottomPanelVM.OnTextInputPreviewKeyDown(e.Key);
     }
   }
 }

@@ -1,4 +1,7 @@
 ﻿using CookbookMVVM;
+using ViewModel.BottomPanelVMs;
+using ViewModel.CentralPanelVMs;
+using ViewModel.TotalCounterVMs;
 
 namespace ViewModel.MainWindowVMs
 {
@@ -16,9 +19,8 @@ namespace ViewModel.MainWindowVMs
       this.bottomPanelVM = bottomPanelVM;
       this.centralPanelVM = centralPanelVM;
       this.totalCounterVM = totalCounterVM;
-      this.bottomPanelVM.TimerStarted += this.centralPanelVM.AddTimerNote;
-      this.bottomPanelVM.TimerStopped += this.centralPanelVM.EndTimerNote;
-      this.bottomPanelVM.TimerStopped += (s, a) => this.totalCounterVM.Add(a);
+      this.bottomPanelVM.ActionRequested += this.centralPanelVM.HandleNoteCommand;
+      this.bottomPanelVM.ActionRequested += this.totalCounterVM.HandleNoteCommand;
     }
 
     public IBottomPanelVM BottomPanelVM => bottomPanelVM;

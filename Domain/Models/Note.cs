@@ -1,18 +1,19 @@
 ﻿using System;
+using Domain.Enums;
 
 namespace Domain.Models
 {
   public struct Note
   {
     public Note(
-      string text, string header, NoteState state, DateTime timerStarted,
-      DateTime timerStopped)
+      string text, string header, NoteState state, DateTime startedAt,
+      TimeSpan duration)
     {
       Text = text;
       Header = header;
       State = state;
-      TimerStarted = timerStarted;
-      TimerStopped = timerStopped;
+      StartedAt = startedAt;
+      Duration = duration;
     }
 
     public string Text { get; }
@@ -21,8 +22,8 @@ namespace Domain.Models
 
     public NoteState State { get; }
 
-    public DateTime TimerStarted { get; }
+    public DateTime StartedAt { get; }
 
-    public DateTime TimerStopped { get; }
+    public TimeSpan Duration { get; }
   }
 }
