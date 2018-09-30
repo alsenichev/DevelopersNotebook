@@ -7,7 +7,7 @@ namespace ViewModel.BottomPanelVMs
   /// </summary>
   public static class TextInputParser
   {
-    public static (CommandsFromTextInput noteCommand, string userEnteredText)
+    public static (CommandsFromTextInput textInputCommand, string userEnteredText)
       ParseText(string input)
     {
       var trimmed = input.TrimStart();
