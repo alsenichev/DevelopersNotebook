@@ -9,10 +9,9 @@ namespace ViewModel.TotalCounterVMs
   {
     private TimeSpan counter;
 
-    public void Add(TimeSpan timeSpan)
+    public TotalCounterVM()
     {
-      counter += timeSpan;
-      OnPropertyChanged(nameof(TotalTime));
+      counter = TimeSpan.Zero;
     }
 
     public string TotalTime => counter.ToString();
@@ -33,12 +32,8 @@ namespace ViewModel.TotalCounterVMs
         default:
           throw new ArgumentOutOfRangeException(nameof(NoteCommands));
       }
-      OnPropertyChanged(nameof(TotalTime));
-    }
 
-    public TotalCounterVM()
-    {
-      counter = TimeSpan.Zero;
+      OnPropertyChanged(nameof(TotalTime));
     }
   }
 }

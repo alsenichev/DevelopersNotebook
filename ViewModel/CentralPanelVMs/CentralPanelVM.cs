@@ -16,6 +16,13 @@ namespace ViewModel.CentralPanelVMs
     private readonly ITimeProvider timeProvider;
     private readonly INoteFactory noteFactory;
 
+    public CentralPanelVM(ITimeProvider timeProvider, INoteFactory noteFactory)
+    {
+      this.timeProvider = timeProvider;
+      this.noteFactory = noteFactory;
+      notes = new ObservableCollection<NoteVM>();
+    }
+
     public ObservableCollection<NoteVM> Notes => notes;
 
     public void HandleNoteCommand(object sender, NoteCommandEventArgs e)
@@ -38,6 +45,7 @@ namespace ViewModel.CentralPanelVMs
           StopTask(e.TimerElapsed);
           break;
         case NoteCommands.PinNote:
+
           // TODO
           break;
         default:
@@ -71,7 +79,8 @@ namespace ViewModel.CentralPanelVMs
 
     private void ResumeTask(string text)
     {
-      var noteVM = notes.LastOrDefault(n => n.Model.State == NoteState.TimerPaused);
+      var noteVM =
+        notes.LastOrDefault(n => n.Model.State == NoteState.TimerPaused);
       if (noteVM == null)
       {
         // timer is started, command to resume the task,
@@ -79,6 +88,7 @@ namespace ViewModel.CentralPanelVMs
         CreateNewTask(text);
         return;
       }
+
       var updatedNote = noteFactory.ResumeTask(noteVM.Model);
       var updatedVM = new NoteVM {Model = updatedNote};
       UpdateNoteVM(noteVM, updatedVM);
@@ -92,7 +102,7 @@ namespace ViewModel.CentralPanelVMs
       OnPropertyChanged(nameof(Notes));
     }
 
-    public void StopTask(TimeSpan elapsedTimer)
+    private void StopTask(TimeSpan elapsedTimer)
     {
       var timeStopped = timeProvider.Now;
       var noteVM = notes.Single(n => n.Model.State == NoteState.TimerRunning);
@@ -100,13 +110,6 @@ namespace ViewModel.CentralPanelVMs
         noteFactory.StopTask(noteVM.Model, timeStopped, elapsedTimer);
       var updatedVM = new NoteVM {Model = updatedNote};
       UpdateNoteVM(noteVM, updatedVM);
-    }
-
-    public CentralPanelVM(ITimeProvider timeProvider, INoteFactory noteFactory)
-    {
-      this.timeProvider = timeProvider;
-      this.noteFactory = noteFactory;
-      notes = new ObservableCollection<NoteVM>();
     }
   }
 }

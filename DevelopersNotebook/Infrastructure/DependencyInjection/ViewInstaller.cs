@@ -12,7 +12,7 @@ namespace DevelopersNotebook.Infrastructure.DependencyInjection
     {
       container.Register(
         Component.For<Window>().ImplementedBy<MainWindow>(),
-        Component.For<TimeTrackerInitialization>()
+        Component.For<ApplicationInitialization>()
       );
     }
   }

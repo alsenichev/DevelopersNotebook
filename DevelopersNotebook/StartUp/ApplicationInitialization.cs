@@ -1,18 +1,18 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
-using ViewModel.Infrastructure.Logging;
+using log4net;
 
 namespace DevelopersNotebook.StartUp
 {
-  public class TimeTrackerInitialization : IDisposable
+  /// <summary>
+  /// Performs necessary actions during the start of the application.  
+  /// </summary>
+  public class ApplicationInitialization : IDisposable
   {
-    private readonly ITimeTrackerLogger logger;
+    private static readonly ILog logger =
+      LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
     private Window window;
-
-    public TimeTrackerInitialization(ITimeTrackerLogger logger)
-    {
-      this.logger = logger;
-    }
 
     public void InitializeBeforeShowingTheWindow()
     {

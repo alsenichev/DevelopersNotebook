@@ -8,7 +8,6 @@
       BorderBrush="{StaticResource IconsNeutral}"
       Background="{StaticResource NoteBackground}"
     >
-
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>

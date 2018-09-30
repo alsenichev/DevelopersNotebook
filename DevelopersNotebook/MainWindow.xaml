@@ -72,8 +72,7 @@
         Text="{Binding TextInput}"
         TabIndex="0"
         IsEditable="true"
-        PreviewKeyDown="MainText_OnPreviewKeyDown"
-        ToolTip="ENTER - режим навигации" />
+        PreviewKeyDown="MainText_OnPreviewKeyDown"/>
       <TextBlock Grid.Column="1"
                        Text="{Binding TimerTime}"
                        HorizontalAlignment="Right"

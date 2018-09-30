@@ -15,7 +15,7 @@ namespace DevelopersNotebook
   public partial class App : Application
   {
     private WindsorContainer container;
-    private TimeTrackerInitialization appInit;
+    private ApplicationInitialization appInit;
 
     public App()
     {
@@ -33,7 +33,7 @@ namespace DevelopersNotebook
     {
       container = new WindsorContainer();
       container.Install(FromAssembly.This());
-      appInit = container.Resolve<TimeTrackerInitialization>();
+      appInit = container.Resolve<ApplicationInitialization>();
 
       // prepare view-models before showing main window
       appInit.InitializeBeforeShowingTheWindow();
@@ -50,7 +50,7 @@ namespace DevelopersNotebook
       DispatcherUnhandledExceptionEventArgs e)
     {
       appInit.LogAndDisplayError(
-        $"Непредвиденная ошибка: {e.Exception.Message}");
+        $"Unexpected error: {e.Exception.Message}");
       appInit.Dispose();
 
       //handle error, otherwise Windows will complain

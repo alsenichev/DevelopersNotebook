@@ -18,7 +18,7 @@ namespace ViewModel.BottomPanelVMs
       TimeChanged?.Invoke(this, System.EventArgs.Empty);
     }
 
-    void Increment(TimeSpan step)
+    private void Increment(TimeSpan step)
     {
       elapsed += step;
     }

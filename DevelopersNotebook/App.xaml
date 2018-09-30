@@ -10,7 +10,6 @@
         <ResourceDictionary Source="ResourceDictionaries/LookAndFeel.xaml" />
         <ResourceDictionary Source="ResourceDictionaries/Icons.xaml" />
         <ResourceDictionary Source="ResourceDictionaries/Buttons.xaml"/>
-        <ResourceDictionary Source="ResourceDictionaries/DataGridStyle.xaml" />
         <ResourceDictionary Source="ResourceDictionaries/Converters.xaml"/>
         <ResourceDictionary Source="DataTemplates/NoteView.xaml" />
       </ResourceDictionary.MergedDictionaries>

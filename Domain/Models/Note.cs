@@ -6,7 +6,10 @@ namespace Domain.Models
   public struct Note
   {
     public Note(
-      string text, string header, NoteState state, DateTime startedAt,
+      string text,
+      string header,
+      NoteState state,
+      DateTime startedAt,
       TimeSpan duration)
     {
       Text = text;

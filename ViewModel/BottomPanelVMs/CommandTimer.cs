@@ -4,7 +4,7 @@ using ViewModel.Enums;
 namespace ViewModel.BottomPanelVMs
 {
   /// <summary>
-  /// Interprets the
+  /// The timer, that can start of stop itself depending on the received command from TextInput.
   /// </summary>
   public class CommandTimer
   {
@@ -23,6 +23,10 @@ namespace ViewModel.BottomPanelVMs
 
     public TimeSpan Elapsed => timer.Elapsed;
 
+    /// <summary>
+    /// Translates the command from TextInput into NoteCommand. Reports the timer time
+    /// since last change. Can start or stop the timer.
+    /// </summary>
     public (NoteCommands noteCommand, TimeSpan timerElapsed)
       HandleCommand(CommandsFromTextInput inputCommand)
     {
@@ -55,6 +59,7 @@ namespace ViewModel.BottomPanelVMs
             timer.Reset();
             return (NoteCommands.PauseTask, elapsed);
           }
+
           timer.Start();
           return (NoteCommands.ResumeTask, TimeSpan.Zero);
         case CommandsFromTextInput.PinNote:
