@@ -53,6 +53,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BottomPanelVMs\ITimer.cs" />
     <Compile Include="BottomPanelVMs\TextInputParser.cs" />
     <Compile Include="BottomPanelVMs\Timer.cs" />
     <Compile Include="BottomPanelVMs\CommandTimer.cs" />

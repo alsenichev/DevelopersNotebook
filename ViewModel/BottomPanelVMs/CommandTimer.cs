@@ -8,7 +8,7 @@ namespace ViewModel.BottomPanelVMs
   /// </summary>
   public class CommandTimer
   {
-    private readonly Timer timer;
+    private readonly ITimer timer;
 
     public event EventHandler<System.EventArgs> TimeChanged
     {
@@ -16,7 +16,7 @@ namespace ViewModel.BottomPanelVMs
       remove => timer.TimeChanged -= value;
     }
 
-    public CommandTimer(Timer timer)
+    public CommandTimer(ITimer timer)
     {
       this.timer = timer;
     }

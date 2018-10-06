@@ -3,7 +3,7 @@ using System.Windows.Threading;
 
 namespace ViewModel.BottomPanelVMs
 {
-  public class Timer
+  public class Timer : ITimer
   {
     private TimeSpan elapsed;
     private readonly DispatcherTimer dispatcherTimer;
