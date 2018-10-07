@@ -23,6 +23,10 @@ namespace ViewModel.CentralPanelVMs
       notes = new ObservableCollection<NoteVM>();
     }
 
+    public event EventHandler<System.EventArgs> StartTimerRequested;
+
+    public event EventHandler<System.EventArgs> StopTimerRequested;
+
     public ObservableCollection<NoteVM> Notes => notes;
 
     public void HandleNoteCommand(object sender, NoteCommandEventArgs e)
@@ -39,13 +43,12 @@ namespace ViewModel.CentralPanelVMs
           PauseTask(e.TimerElapsed);
           break;
         case NoteCommands.ResumeTask:
-          ResumeTask(e.InputText);
+          ResumeTask();
           break;
         case NoteCommands.StopTask:
           StopTask(e.TimerElapsed);
           break;
         case NoteCommands.PinNote:
-
           // TODO
           break;
         default:
@@ -65,51 +68,48 @@ namespace ViewModel.CentralPanelVMs
       var note = noteFactory.CreateTask(text, timeProvider.Now);
       notes.Add(new NoteVM {Model = note});
       OnPropertyChanged(nameof(Notes));
+      StartTimerRequested?.Invoke(this, System.EventArgs.Empty);
     }
 
     private void PauseTask(TimeSpan elapsedTimer)
     {
       var timePaused = timeProvider.Now;
       var noteVM = notes.Single(n => n.Model.State == NoteState.TimerRunning);
-      var updatedNote =
-        noteFactory.PauseTask(noteVM.Model, timePaused, elapsedTimer);
+      var updatedNote = noteFactory.PausedTask(noteVM.Model, timePaused, elapsedTimer);
       var updatedVM = new NoteVM {Model = updatedNote};
-      UpdateNoteVM(noteVM, updatedVM);
+      UpdateNoteVMInPlace(noteVM, updatedVM);
+      StopTimerRequested?.Invoke(this, System.EventArgs.Empty);
     }
 
-    private void ResumeTask(string text)
+    private void ResumeTask()
     {
-      var noteVM =
-        notes.LastOrDefault(n => n.Model.State == NoteState.TimerPaused);
+      var noteVM = notes.LastOrDefault(n => n.Model.State == NoteState.TimerPaused);
       if (noteVM == null)
       {
-        // timer is started, command to resume the task,
-        // but there was no paused task - ok, make a new one
-        CreateNewTask(text);
         return;
       }
-
-      var updatedNote = noteFactory.ResumeTask(noteVM.Model);
+      var updatedNote = noteFactory.ResumedTask(noteVM.Model);
       var updatedVM = new NoteVM {Model = updatedNote};
-      UpdateNoteVM(noteVM, updatedVM);
-    }
-
-    private void UpdateNoteVM(NoteVM oldNote, NoteVM newNote)
-    {
-      int index = notes.IndexOf(oldNote);
-      notes.RemoveAt(index);
-      notes.Insert(index, newNote);
-      OnPropertyChanged(nameof(Notes));
+      UpdateNoteVMInPlace(noteVM, updatedVM);
+      StartTimerRequested?.Invoke(this, System.EventArgs.Empty);
     }
 
     private void StopTask(TimeSpan elapsedTimer)
     {
       var timeStopped = timeProvider.Now;
       var noteVM = notes.Single(n => n.Model.State == NoteState.TimerRunning);
-      var updatedNote =
-        noteFactory.StopTask(noteVM.Model, timeStopped, elapsedTimer);
+      var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
       var updatedVM = new NoteVM {Model = updatedNote};
-      UpdateNoteVM(noteVM, updatedVM);
+      UpdateNoteVMInPlace(noteVM, updatedVM);
+      StopTimerRequested?.Invoke(this, System.EventArgs.Empty);
+    }
+
+    private void UpdateNoteVMInPlace(NoteVM oldNote, NoteVM newNote)
+    {
+      int index = notes.IndexOf(oldNote);
+      notes.RemoveAt(index);
+      notes.Insert(index, newNote);
+      OnPropertyChanged(nameof(Notes));
     }
   }
 }

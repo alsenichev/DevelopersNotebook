@@ -9,10 +9,10 @@ namespace Domain.Interfaces
 
     Note CreateNote(string text);
 
-    Note PauseTask(Note model, DateTime timeStopped, TimeSpan elapsedTimer);
+    Note PausedTask(Note model, DateTime timeStopped, TimeSpan elapsedTimer);
 
-    Note StopTask(Note note, DateTime timeStopped, TimeSpan elapsedTimer);
+    Note StoppedTask(Note note, DateTime timeStopped, TimeSpan elapsedTimer);
 
-    Note ResumeTask(Note note);
+    Note ResumedTask(Note note);
   }
 }

@@ -19,7 +19,7 @@ namespace Domain.Services
         "", text, NoteState.Unknown, DateTime.MinValue, TimeSpan.Zero);
     }
 
-    public Note PauseTask(Note note, DateTime timePaused, TimeSpan elapsedTimer)
+    public Note PausedTask(Note note, DateTime timePaused, TimeSpan elapsedTimer)
     {
       return new Note(
         $"Started at {note.StartedAt}. Paused at {timePaused}. Duration: {note.Duration + elapsedTimer}.",
@@ -29,7 +29,7 @@ namespace Domain.Services
         note.Duration + elapsedTimer);
     }
 
-    public Note StopTask(Note note, DateTime timeStopped, TimeSpan elapsedTimer)
+    public Note StoppedTask(Note note, DateTime timeStopped, TimeSpan elapsedTimer)
     {
       return new Note(
         $"Started at {note.StartedAt}. Completed at {timeStopped}. Duration: {note.Duration + elapsedTimer}.",
@@ -39,7 +39,7 @@ namespace Domain.Services
         note.Duration + elapsedTimer);
     }
 
-    public Note ResumeTask(Note note)
+    public Note ResumedTask(Note note)
     {
       return new Note(
         $"Started at {note.StartedAt}. Duration so far: {note.Duration}",

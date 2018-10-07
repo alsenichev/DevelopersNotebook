@@ -13,6 +13,10 @@ namespace ViewModel.BottomPanelVMs
 
     event EventHandler<NoteCommandEventArgs> ActionRequested;
 
+    void StartTimer();
+
+    void StopTimer();
+
     void OnTextInputPreviewKeyDown(Key key);
 
     ObservableCollection<string> Captions { get; }

@@ -56,7 +56,6 @@
     <Compile Include="BottomPanelVMs\ITimer.cs" />
     <Compile Include="BottomPanelVMs\TextInputParser.cs" />
     <Compile Include="BottomPanelVMs\Timer.cs" />
-    <Compile Include="BottomPanelVMs\CommandTimer.cs" />
     <Compile Include="Enums\CommandsFromTextInput.cs" />
     <Compile Include="Enums\NoteCommands.cs" />
     <Compile Include="EventArgs\NoteCommandEventArgs.cs" />
