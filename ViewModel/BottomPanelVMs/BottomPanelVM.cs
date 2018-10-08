@@ -36,6 +36,8 @@ namespace ViewModel.BottomPanelVMs
     public void StopTimer()
     {
       timer.Stop();
+      timer.Reset();
+      OnPropertyChanged(nameof(TimerTime));
     }
 
     public void OnTextInputPreviewKeyDown(Key key)
