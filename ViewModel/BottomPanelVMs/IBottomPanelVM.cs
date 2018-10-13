@@ -17,6 +17,8 @@ namespace ViewModel.BottomPanelVMs
 
     void StopTimer();
 
+    void Shutdown();
+
     void OnTextInputPreviewKeyDown(Key key);
 
     ObservableCollection<string> Captions { get; }

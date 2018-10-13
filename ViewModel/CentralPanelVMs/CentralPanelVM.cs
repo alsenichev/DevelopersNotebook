@@ -57,6 +57,9 @@ namespace ViewModel.CentralPanelVMs
         case NoteCommands.StopTask:
           StopTask(e.TimerElapsed);
           break;
+        case NoteCommands.ShutDown:
+          Shutdown(e.TimerElapsed);
+          break;
         case NoteCommands.PinNote:
           // TODO
           break;
@@ -112,6 +115,19 @@ namespace ViewModel.CentralPanelVMs
       var updatedVM = new NoteVM {Model = updatedNote};
       UpdateNoteVMInPlace(noteVM, updatedVM);
       StopTimerRequested?.Invoke(this, System.EventArgs.Empty);
+    }
+
+    private void Shutdown(TimeSpan elapsedTimer)
+    {
+      var timeStopped = timeProvider.Now;
+      var noteVM = notes.SingleOrDefault(n => n.Model.State == NoteState.TimerRunning);
+      if (noteVM != null)
+      {
+        var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
+        var updatedVM = new NoteVM { Model = updatedNote };
+        UpdateNoteVMInPlace(noteVM, updatedVM);
+      }
+      mainRepository.SaveNotes(notes.Select(n => n.Model));
     }
 
     private void UpdateNoteVMInPlace(NoteVM oldNote, NoteVM newNote)

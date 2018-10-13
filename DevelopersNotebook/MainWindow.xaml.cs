@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using ViewModel.MainWindowVMs;
@@ -16,6 +17,12 @@ namespace DevelopersNotebook
       DataContext = mainWindowVM;
       this.mainWindowVM = mainWindowVM;
       InitializeComponent();
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+      base.OnClosing(e);
+      mainWindowVM.BottomPanelVM.Shutdown();
     }
 
     protected override void OnClosed(EventArgs e)

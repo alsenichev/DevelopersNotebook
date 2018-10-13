@@ -40,6 +40,13 @@ namespace ViewModel.BottomPanelVMs
       OnPropertyChanged(nameof(TimerTime));
     }
 
+    public void Shutdown()
+    {
+      ActionRequested?.Invoke(
+        this,
+        new NoteCommandEventArgs(NoteCommands.ShutDown, "", timer.Elapsed));
+    }
+
     public void OnTextInputPreviewKeyDown(Key key)
     {
       if (key != Key.Enter)

@@ -28,6 +28,7 @@ namespace ViewModel.TotalCounterVMs
         case NoteCommands.StartTask:
         case NoteCommands.PinNote:
         case NoteCommands.ResumeTask:
+        case NoteCommands.ShutDown:
           break;
         default:
           throw new ArgumentOutOfRangeException(nameof(NoteCommands));

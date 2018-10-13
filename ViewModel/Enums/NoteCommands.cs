@@ -7,6 +7,7 @@
     PauseTask,
     ResumeTask,
     StopTask,
-    PinNote
+    PinNote,
+    ShutDown
   }
 }
