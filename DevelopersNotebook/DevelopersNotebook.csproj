@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\DependencyInjection\DataAccessInstaller.cs" />
     <Compile Include="Infrastructure\DependencyInjection\DomainInstaller.cs" />
     <Compile Include="StartUp\ApplicationInitialization.cs" />
     <Compile Include="UserControls\SvgIcon.xaml.cs" />
@@ -141,6 +142,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{b6b7c220-debd-46ea-a200-6ebd63cebb65}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{50ba9ce9-e73f-4f1b-b0a0-44daaa89c5f3}</Project>
       <Name>Domain</Name>

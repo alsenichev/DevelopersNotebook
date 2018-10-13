@@ -13,6 +13,7 @@ namespace ViewModel.CentralPanelVMs
 
     ObservableCollection<NoteVM> Notes { get; }
 
+    void LoadNotes();
     void HandleNoteCommand(object sender, NoteCommandEventArgs e);
   }
 }

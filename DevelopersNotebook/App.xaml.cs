@@ -26,7 +26,7 @@ namespace DevelopersNotebook
     {
       // Log files are session-wise
       Logger.Setup(Path.Combine(
-        "Logs", $"TaskTracker{DateTime.Now:dd-MM-yyyy-HH-mm-ss}LogEvents.txt"));
+        "Logs", $"DevelopersNotebook{DateTime.Now:dd-MM-yyyy-HH-mm-ss}LogEvents.txt"));
     }
 
     protected override void OnStartup(StartupEventArgs e)

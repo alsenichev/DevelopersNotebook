@@ -12,15 +12,17 @@ namespace ViewModel.CentralPanelVMs
 {
   public class CentralPanelVM : ViewModelBase, ICentralPanelVM
   {
-    private readonly ObservableCollection<NoteVM> notes;
     private readonly ITimeProvider timeProvider;
     private readonly INoteFactory noteFactory;
+    private readonly IMainRepository mainRepository;
 
-    public CentralPanelVM(ITimeProvider timeProvider, INoteFactory noteFactory)
+    private ObservableCollection<NoteVM> notes;
+
+    public CentralPanelVM(ITimeProvider timeProvider, INoteFactory noteFactory, IMainRepository mainRepository)
     {
       this.timeProvider = timeProvider;
       this.noteFactory = noteFactory;
-      notes = new ObservableCollection<NoteVM>();
+      this.mainRepository = mainRepository;
     }
 
     public event EventHandler<System.EventArgs> StartTimerRequested;
@@ -28,6 +30,13 @@ namespace ViewModel.CentralPanelVMs
     public event EventHandler<System.EventArgs> StopTimerRequested;
 
     public ObservableCollection<NoteVM> Notes => notes;
+
+    public void LoadNotes()
+    {
+      notes = new ObservableCollection<NoteVM>(mainRepository.LoadNotes()
+        .Select(n => new NoteVM { Model = n }));
+      OnPropertyChanged(nameof(Notes));
+    }
 
     public void HandleNoteCommand(object sender, NoteCommandEventArgs e)
     {
@@ -54,6 +63,7 @@ namespace ViewModel.CentralPanelVMs
         default:
           throw new ArgumentOutOfRangeException(nameof(NoteCommands));
       }
+      mainRepository.SaveNotes(notes.Select(n => n.Model));
     }
 
     private void CreateNote(string text)

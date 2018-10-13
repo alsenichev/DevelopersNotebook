@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Windows;
 using log4net;
+using ViewModel.CentralPanelVMs;
 
 namespace DevelopersNotebook.StartUp
 {
@@ -12,7 +13,14 @@ namespace DevelopersNotebook.StartUp
   {
     private static readonly ILog logger =
       LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
     private Window window;
+    private ICentralPanelVM centralPanelVM;
+
+    public ApplicationInitialization(ICentralPanelVM centralPanelVM)
+    {
+      this.centralPanelVM = centralPanelVM;
+    }
 
     public void InitializeBeforeShowingTheWindow()
     {
@@ -34,8 +42,7 @@ namespace DevelopersNotebook.StartUp
 
     public void InitializeAfterShowingTheWindow()
     {
-      //refreshWorkItems.RefreshItems();
-      //dataGridVM.UpdateTfsItems();
+      centralPanelVM.LoadNotes();
     }
 
     public void LogAndDisplayError(string message)
