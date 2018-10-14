@@ -49,8 +49,7 @@ namespace DevelopersNotebook
       object sender,
       DispatcherUnhandledExceptionEventArgs e)
     {
-      appInit.LogAndDisplayError(
-        $"Unexpected error: {e.Exception.Message}");
+      appInit.LogAndDisplayError($"Unexpected error: {e.Exception.Message}");
       appInit.Dispose();
 
       //handle error, otherwise Windows will complain

@@ -16,7 +16,7 @@ namespace DataAccess.Services
 {
   public class MainRepository : IMainRepository
   {
-    private const string DestinationFolder = @"F:\TestYard";
+    private const string DestinationFolder = @"c:\Users\Aleksey\Dropbox\Documents\Notes";
     private const string FileName = "Notes.json";
 
     private static readonly ILog logger =
@@ -44,15 +44,8 @@ namespace DataAccess.Services
     {
       var data = new NotebookData {Notes =  NoteMapper.Convert(notes.ToList()), TimeStamp = timeProvider.Now};
       string json = JsonConvert.SerializeObject(data);
-      try
-      {
-        File.WriteAllText(filePath, json);
-      }
-      catch (Exception e)
-      {
-        //TODO add error message window or line
-        logger.Error("Failed to save notes", e);
-      }
+      // for now, possible exceptions will be handled on the application-level
+      File.WriteAllText(filePath, json);
     }
   }
 }

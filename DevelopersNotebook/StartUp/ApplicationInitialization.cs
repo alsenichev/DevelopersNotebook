@@ -60,6 +60,7 @@ namespace DevelopersNotebook.StartUp
 
     public void LogAndDisplayError(string message)
     {
+      // TODO need to notify the user somehow
       logger.Error(message);
     }
 
