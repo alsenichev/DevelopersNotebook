@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows;
+using Domain.BusinessRules.Services;
+using Domain.Interfaces;
 using log4net;
 using ViewModel.CentralPanelVMs;
+using ViewModel.TotalCounterVMs;
 
 namespace DevelopersNotebook.StartUp
 {
@@ -15,17 +18,27 @@ namespace DevelopersNotebook.StartUp
       LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
     private Window window;
-    private ICentralPanelVM centralPanelVM;
+    private readonly ICentralPanelVM centralPanelVM;
+    private readonly ITotalCounterVM totalCounterVM;
+    private readonly IMainRepository mainRepository;
+    private readonly DailyTimeCalculation dailyTimeCalculation;
 
-    public ApplicationInitialization(ICentralPanelVM centralPanelVM)
+    public ApplicationInitialization(ICentralPanelVM centralPanelVM, IMainRepository mainRepository, DailyTimeCalculation dailyTimeCalculation, ITotalCounterVM totalCounterVM)
     {
       this.centralPanelVM = centralPanelVM;
+      this.mainRepository = mainRepository;
+      this.dailyTimeCalculation = dailyTimeCalculation;
+      this.totalCounterVM = totalCounterVM;
     }
 
     public void InitializeBeforeShowingTheWindow()
     {
       // add references of main window to view models that
       // contain dialogs, so they could have parent window
+      var notes = mainRepository.LoadNotes();
+      centralPanelVM.InitializeNotes(notes);
+      var counterValue = dailyTimeCalculation.CalculateTimeForToday(notes);
+      totalCounterVM.InitCounter(counterValue);
     }
 
     // ReSharper disable once UnusedMember.Global
@@ -42,7 +55,7 @@ namespace DevelopersNotebook.StartUp
 
     public void InitializeAfterShowingTheWindow()
     {
-      centralPanelVM.LoadNotes();
+      // some tasks that may show dialogs
     }
 
     public void LogAndDisplayError(string message)

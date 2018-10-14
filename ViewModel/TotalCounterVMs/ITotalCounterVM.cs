@@ -1,4 +1,5 @@
-﻿using ViewModel.EventArgs;
+﻿using System;
+using ViewModel.EventArgs;
 
 namespace ViewModel.TotalCounterVMs
 {
@@ -7,5 +8,7 @@ namespace ViewModel.TotalCounterVMs
     string TotalTime { get; }
 
     void HandleNoteCommand(object sender, NoteCommandEventArgs e);
+
+    void InitCounter(TimeSpan initialValue);
   }
 }

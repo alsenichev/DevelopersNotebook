@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessRules\Services\DailyTimeCalculation.cs" />
     <Compile Include="Interfaces\INoteFactory.cs" />
     <Compile Include="Interfaces\IMainRepository.cs" />
     <Compile Include="Interfaces\ITimeProvider.cs" />

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CookbookMVVM;
 using Domain.Enums;
 using Domain.Interfaces;
+using Domain.Models;
 using ViewModel.Enums;
 using ViewModel.EventArgs;
 using ViewModel.ModelsVMs;
@@ -31,10 +33,9 @@ namespace ViewModel.CentralPanelVMs
 
     public ObservableCollection<NoteVM> Notes => notes;
 
-    public void LoadNotes()
+    public void InitializeNotes(IList<Note> source)
     {
-      notes = new ObservableCollection<NoteVM>(mainRepository.LoadNotes()
-        .Select(n => new NoteVM { Model = n }));
+      notes = new ObservableCollection<NoteVM>(source.Select(n => new NoteVM { Model = n }));
       OnPropertyChanged(nameof(Notes));
     }
 

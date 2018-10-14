@@ -11,7 +11,9 @@ namespace ViewModel.UnitTests
   {
     private ITotalCounterVM CreateTotalCounterVM()
     {
-      return new TotalCounterVM();
+      var result = new TotalCounterVM();
+      result.InitCounter(TimeSpan.Zero);
+      return result;
     }
 
     [Test]

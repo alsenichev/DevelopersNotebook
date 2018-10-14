@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Domain.Models;
 using ViewModel.EventArgs;
 using ViewModel.ModelsVMs;
 
@@ -13,7 +15,7 @@ namespace ViewModel.CentralPanelVMs
 
     ObservableCollection<NoteVM> Notes { get; }
 
-    void LoadNotes();
+    void InitializeNotes(IList<Note> notes);
     void HandleNoteCommand(object sender, NoteCommandEventArgs e);
   }
 }
