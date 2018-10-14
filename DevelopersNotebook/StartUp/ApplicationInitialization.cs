@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using Domain.BusinessRules.Services;
@@ -35,7 +36,7 @@ namespace DevelopersNotebook.StartUp
     {
       // add references of main window to view models that
       // contain dialogs, so they could have parent window
-      var notes = mainRepository.LoadNotes();
+      var notes = mainRepository.LoadNotes().Select(n => n.FromDisk()).ToList();
       centralPanelVM.InitializeNotes(notes);
       var counterValue = dailyTimeCalculation.CalculateTimeForToday(notes);
       totalCounterVM.InitCounter(counterValue);
