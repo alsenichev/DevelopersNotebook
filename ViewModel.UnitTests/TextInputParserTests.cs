@@ -12,18 +12,25 @@ namespace ViewModel.UnitTests
     {
       var (command, text) =
         TextInputParser.ParseText("/tNew Task");
-      Assert.AreEqual(CommandsFromTextInput.StartStopTask, command);
+      Assert.AreEqual(TextInputCommand.StartTask, command);
       Assert.AreEqual("New Task", text);
     }
 
     [Test]
-    public void SlashPAndText_AreParsedCorrectly()
+    public void SlashTAndNoText_AreParsedCorrectly()
     {
       var (command, text) =
-        TextInputParser.ParseText("/pSome text");
-      Assert.AreEqual(CommandsFromTextInput.PauseTask, command);
-      // Currently I don't know how to use the text during pausing a task
-      // may be it could be used as a comment
+        TextInputParser.ParseText("/t  ");
+      Assert.AreEqual(TextInputCommand.StopTask, command);
+      Assert.AreEqual("", text);
+    }
+
+    [Test]
+    public void SlashPinAndText_AreParsedCorrectly()
+    {
+      var (command, text) =
+        TextInputParser.ParseText("/pinSome text");
+      Assert.AreEqual(TextInputCommand.PinNote, command);
       Assert.AreEqual("Some text", text);
     }
   }

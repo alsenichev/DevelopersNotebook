@@ -1,7 +1,6 @@
 ﻿using System;
 using CookbookMVVM;
 using ViewModel.Enums;
-using ViewModel.EventArgs;
 
 namespace ViewModel.TotalCounterVMs
 {
@@ -20,27 +19,6 @@ namespace ViewModel.TotalCounterVMs
     public void UpdateCounter(TimeSpan timeSpan)
     {
       counter += timeSpan;
-      OnPropertyChanged(nameof(TotalTime));
-    }
-
-    public void HandleNoteCommand(object sender, NoteCommandEventArgs e)
-    {
-      switch (e.NoteCommand)
-      {
-        case NoteCommands.PauseTask:
-        case NoteCommands.StopTask:
-          counter += e.TimerElapsed;
-          break;
-        case NoteCommands.CreateNote:
-        case NoteCommands.StartTask:
-        case NoteCommands.PinNote:
-        case NoteCommands.ResumeTask:
-        case NoteCommands.ShutDown:
-          break;
-        default:
-          throw new ArgumentOutOfRangeException(nameof(NoteCommands));
-      }
-
       OnPropertyChanged(nameof(TotalTime));
     }
   }

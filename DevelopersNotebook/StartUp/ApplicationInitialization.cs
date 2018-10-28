@@ -34,7 +34,7 @@ namespace DevelopersNotebook.StartUp
 
     public void InitializeBeforeShowingTheWindow()
     {
-      // add references of main window to view models that
+      // if necessary, add references of main window to view models that
       // contain dialogs, so they could have parent window
       var notes = mainRepository.LoadNotes().Select(n => n.FromDisk()).ToList();
       centralPanelVM.InitializeNotes(notes);
@@ -56,7 +56,7 @@ namespace DevelopersNotebook.StartUp
 
     public void InitializeAfterShowingTheWindow()
     {
-      // some tasks that may show dialogs
+      //TODO - scroll down to the last item.
     }
 
     public void LogAndDisplayError(string message)

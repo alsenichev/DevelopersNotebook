@@ -53,15 +53,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BottomPanelVMs\IReadOnlyTimer.cs" />
     <Compile Include="BottomPanelVMs\ITimer.cs" />
     <Compile Include="BottomPanelVMs\TextInputParser.cs" />
     <Compile Include="BottomPanelVMs\Timer.cs" />
-    <Compile Include="Enums\CommandsFromTextInput.cs" />
-    <Compile Include="Enums\NoteCommands.cs" />
-    <Compile Include="EventArgs\NoteCommandEventArgs.cs" />
-    <Compile Include="CentralPanelVMs\CentralPanelVM.cs" />
     <Compile Include="CentralPanelVMs\ICentralPanelVM.cs" />
+    <Compile Include="Enums\TextInputCommand.cs" />
+    <Compile Include="EventArguments\TextInputCommandEventArgs.cs" />
+    <Compile Include="CentralPanelVMs\CentralPanelVM.cs" />
     <Compile Include="BottomPanelVMs\IBottomPanelVM.cs" />
+    <Compile Include="InputControllers\IInputController.cs" />
+    <Compile Include="InputControllers\InputController.cs" />
     <Compile Include="TotalCounterVMs\ITotalCounterVM.cs" />
     <Compile Include="MainWindowVMs\MainWindowVM.cs" />
     <Compile Include="BottomPanelVMs\BottomPanelVM.cs" />

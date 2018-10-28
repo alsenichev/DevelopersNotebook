@@ -1,13 +1,10 @@
 ﻿namespace ViewModel.Enums
 {
-  public enum NoteCommands
+  public enum TextInputCommand
   {
     CreateNote,
     StartTask,
-    PauseTask,
-    ResumeTask,
     StopTask,
-    PinNote,
-    ShutDown
+    PinNote
   }
 }

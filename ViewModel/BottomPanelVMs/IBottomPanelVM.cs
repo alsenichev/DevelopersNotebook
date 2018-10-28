@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ViewModel.EventArgs;
+using ViewModel.EventArguments;
 
 namespace ViewModel.BottomPanelVMs
 {
   public interface IBottomPanelVM
   {
-    string TimerTime { get; }
+    event EventHandler<TextInputCommandEventArgs> UserInputReceived;
 
     string TextInput { get; set; }
-
-    event EventHandler<NoteCommandEventArgs> ActionRequested;
-
-    void StartTimer();
-
-    void StopTimer();
-
-    void Shutdown();
 
     void OnTextInputPreviewKeyDown(Key key);
 

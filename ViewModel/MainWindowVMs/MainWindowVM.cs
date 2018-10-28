@@ -2,6 +2,7 @@
 using CookbookMVVM;
 using ViewModel.BottomPanelVMs;
 using ViewModel.CentralPanelVMs;
+using ViewModel.InputControllers;
 using ViewModel.TotalCounterVMs;
 
 namespace ViewModel.MainWindowVMs
@@ -11,33 +12,33 @@ namespace ViewModel.MainWindowVMs
 
     public event EventHandler<System.EventArgs> ScrollDownRequested
     {
-      add => centralPanelVM.ItemsPositionChanged += value;
-      remove => centralPanelVM.ItemsPositionChanged -= value;
+      add => CentralPanelVM.ItemsPositionChanged += value;
+      remove => CentralPanelVM.ItemsPositionChanged -= value;
     }
 
-    private readonly IBottomPanelVM bottomPanelVM;
-    private readonly ICentralPanelVM centralPanelVM;
-    private readonly ITotalCounterVM totalCounterVM;
+    private readonly IInputController inputController;
 
     public MainWindowVM(
       IBottomPanelVM bottomPanelVM,
       ICentralPanelVM centralPanelVM,
-      ITotalCounterVM totalCounterVM)
+      ITotalCounterVM totalCounterVM,
+      IInputController inputController)
     {
-      this.bottomPanelVM = bottomPanelVM;
-      this.centralPanelVM = centralPanelVM;
-      this.totalCounterVM = totalCounterVM;
-      this.bottomPanelVM.ActionRequested += this.centralPanelVM.HandleNoteCommand;
-      this.bottomPanelVM.ActionRequested += this.totalCounterVM.HandleNoteCommand;
-      this.centralPanelVM.StartTimerRequested += (s, a) => this.bottomPanelVM.StartTimer();
-      this.centralPanelVM.StopTimerRequested += (s, a) => this.bottomPanelVM.StopTimer();
-      this.centralPanelVM.StopTimerRequested += (s, a) => this.totalCounterVM.UpdateCounter(a);
+      this.BottomPanelVM = bottomPanelVM;
+      this.CentralPanelVM = centralPanelVM;
+      this.TotalCounterVM = totalCounterVM;
+      this.inputController = inputController;
     }
 
-    public IBottomPanelVM BottomPanelVM => bottomPanelVM;
+    public IBottomPanelVM BottomPanelVM { get; }
 
-    public ICentralPanelVM CentralPanelVM => centralPanelVM;
+    public ICentralPanelVM CentralPanelVM { get; }
 
-    public ITotalCounterVM TotalCounterVM => totalCounterVM;
+    public ITotalCounterVM TotalCounterVM { get; }
+
+    public void PrepareToShutdownApplication()
+    {
+      inputController.PrepareToShutdownApplication();
+    }
   }
 }

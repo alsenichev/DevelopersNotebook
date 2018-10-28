@@ -29,7 +29,7 @@ namespace DevelopersNotebook
     protected override void OnClosing(CancelEventArgs e)
     {
       base.OnClosing(e);
-      mainWindowVM.BottomPanelVM.Shutdown();
+      mainWindowVM.PrepareToShutdownApplication();
     }
 
     protected override void OnClosed(EventArgs e)

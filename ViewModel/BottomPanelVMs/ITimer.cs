@@ -2,13 +2,8 @@
 
 namespace ViewModel.BottomPanelVMs
 {
-  public interface ITimer
+  public interface ITimer: IReadOnlyTimer
   {
-    TimeSpan Elapsed { get; }
-    bool IsRunning { get; }
-
-    event EventHandler<System.EventArgs> TimeChanged;
-
     void Reset();
     void Start();
     void Stop();
