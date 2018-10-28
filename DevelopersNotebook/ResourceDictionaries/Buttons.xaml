@@ -7,7 +7,7 @@
                           ShapeFill="{StaticResource IconsNeutral}"
                           IconWidth="10"
                           IconHeight="10"
-                          Margin="2,3,0,2"
+                          Margin="2,2,0,2"
                           x:Shared="false"/>
 
     <userControls:SvgIcon x:Key="PauseIcon"

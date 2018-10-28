@@ -24,12 +24,12 @@
         <Border
           Grid.Row="1"
           BorderThickness="0"
-          Margin="11,0,11,11"
           SnapsToDevicePixels="True"
           Background="{Binding IsRunning, Converter={StaticResource NoteStatusConverter}}"
           Visibility="{Binding IsTask, Converter={StaticResource BoolToVisConverter}}"
           >
-          <Grid>
+          <Grid
+            Margin="11">
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
               <ColumnDefinition Width="Auto"/>
@@ -49,6 +49,7 @@
               VerticalAlignment="Center"
               HorizontalAlignment="Left"
               TextWrapping="Wrap"
+              Margin="11,0,11,0"
             />
             <Button
               Grid.Column="2"
