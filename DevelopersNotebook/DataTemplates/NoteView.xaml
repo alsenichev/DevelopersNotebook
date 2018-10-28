@@ -21,13 +21,44 @@
           TextWrapping="Wrap"
         >
         </TextBlock>
-        <TextBlock
-          Text="{Binding Text}"
-          Margin="11,0,11,11"
-          VerticalAlignment="Center"
+        <Border
           Grid.Row="1"
-          TextWrapping="Wrap"
-        />
+          BorderThickness="0"
+          Margin="11,0,11,11"
+          SnapsToDevicePixels="True"
+          Background="{Binding IsRunning, Converter={StaticResource NoteStatusConverter}}"
+          Visibility="{Binding IsTask, Converter={StaticResource BoolToVisConverter}}"
+          >
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+          
+          <TextBlock
+            Grid.Column="0"
+            Text="{Binding Text}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            TextWrapping="Wrap"
+            />
+            <TextBlock
+              Grid.Column="1"
+              Text="{Binding Duration}"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Left"
+              TextWrapping="Wrap"
+            />
+            <Button
+              Grid.Column="2"
+              Width="20"
+              Height="20"
+              Content="{Binding IsRunning, Converter={StaticResource BoolToIconConverter}}"
+              Command="{Binding ToggleRunningState}"
+              />
+          </Grid>
+          </Border>
       </Grid>
     </Border>
   </DataTemplate>

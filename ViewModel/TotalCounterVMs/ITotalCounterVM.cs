@@ -10,5 +10,7 @@ namespace ViewModel.TotalCounterVMs
     void HandleNoteCommand(object sender, NoteCommandEventArgs e);
 
     void InitCounter(TimeSpan initialValue);
+
+    void UpdateCounter(TimeSpan timeSpan);
   }
 }

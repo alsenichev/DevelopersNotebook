@@ -17,6 +17,12 @@ namespace ViewModel.TotalCounterVMs
       OnPropertyChanged(nameof(TotalTime));
     }
 
+    public void UpdateCounter(TimeSpan timeSpan)
+    {
+      counter += timeSpan;
+      OnPropertyChanged(nameof(TotalTime));
+    }
+
     public void HandleNoteCommand(object sender, NoteCommandEventArgs e)
     {
       switch (e.NoteCommand)

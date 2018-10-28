@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\NoteStatusConverter.cs" />
     <Compile Include="Infrastructure\DependencyInjection\DataAccessInstaller.cs" />
     <Compile Include="Infrastructure\DependencyInjection\DomainInstaller.cs" />
     <Compile Include="StartUp\ApplicationInitialization.cs" />

@@ -11,11 +11,11 @@ namespace Domain.BusinessRules.Services
     //TODO move to Settings, make customizable
     private const int offsetFromMidnight = 5;
 
-    private ITimeProvider timeProvider;
+    private readonly DateTime startOfTheDay;
 
     public DailyTimeCalculation(ITimeProvider timeProvider)
     {
-      this.timeProvider = timeProvider;
+      startOfTheDay = timeProvider.Now.Date.AddHours(offsetFromMidnight);
     }
 
     public TimeSpan CalculateTimeForToday(IList<Note> notes)
@@ -24,11 +24,15 @@ namespace Domain.BusinessRules.Services
       // time from the moment the app started.
       // If we open the app, we will see the time for the tasks that have started
       // after the start of the working day.
-      var startOfTheDay = timeProvider.Now.Date.AddHours(offsetFromMidnight);
       return notes
-        .Where(n => n.StartedAt > startOfTheDay)
+        .Where(IsTodaysTask)
         .Select(n => n.Duration)
         .Aggregate(TimeSpan.Zero, (d1, d2) => d1.Add(d2));
+    }
+
+    public bool IsTodaysTask(Note task)
+    {
+      return task.StartedAt > startOfTheDay;
     }
   }
 }

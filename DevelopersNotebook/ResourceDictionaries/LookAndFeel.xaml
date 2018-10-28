@@ -3,4 +3,5 @@
                     >
     <SolidColorBrush x:Key="IconsNeutral" Color="DarkSeaGreen"/>
     <SolidColorBrush x:Key="NoteBackground" Color="Beige"/>
+    <SolidColorBrush x:Key="RunningNoteBackground" Color="CornflowerBlue"/>
 </ResourceDictionary>

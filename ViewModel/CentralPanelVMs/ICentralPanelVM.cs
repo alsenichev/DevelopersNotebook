@@ -11,7 +11,7 @@ namespace ViewModel.CentralPanelVMs
   {
 
     event EventHandler<System.EventArgs> StartTimerRequested;
-    event EventHandler<System.EventArgs> StopTimerRequested;
+    event EventHandler<TimeSpan> StopTimerRequested;
 
     ObservableCollection<NoteVM> Notes { get; }
 

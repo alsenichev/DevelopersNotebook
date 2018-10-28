@@ -23,6 +23,7 @@ namespace ViewModel.MainWindowVMs
       this.bottomPanelVM.ActionRequested += this.totalCounterVM.HandleNoteCommand;
       this.centralPanelVM.StartTimerRequested += (s, a) => this.bottomPanelVM.StartTimer();
       this.centralPanelVM.StopTimerRequested += (s, a) => this.bottomPanelVM.StopTimer();
+      this.centralPanelVM.StopTimerRequested += (s, a) => this.totalCounterVM.UpdateCounter(a);
     }
 
     public IBottomPanelVM BottomPanelVM => bottomPanelVM;
