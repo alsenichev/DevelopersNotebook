@@ -16,16 +16,23 @@ namespace ViewModel.CentralPanelVMs
 {
   public class CentralPanelVM : ViewModelBase, ICentralPanelVM
   {
+    public event EventHandler<System.EventArgs> StartTimerRequested;
+    public event EventHandler<TimeSpan> StopTimerRequested;
+    public event EventHandler<System.EventArgs> ItemsPositionChanged;
+
     private readonly ITimeProvider timeProvider;
     private readonly INoteFactory noteFactory;
     private readonly IMainRepository mainRepository;
     private readonly ITimer timer;
     private readonly DailyTimeCalculation dailyTimeCalculation;
-
-    private ObservableCollection<NoteVM> notes;
     private NoteVM runningNoteVM;
 
-    public CentralPanelVM(ITimeProvider timeProvider, INoteFactory noteFactory, IMainRepository mainRepository, ITimer timer, DailyTimeCalculation dailyTimeCalculation)
+    public CentralPanelVM(
+      ITimeProvider timeProvider,
+      INoteFactory noteFactory,
+      IMainRepository mainRepository,
+      ITimer timer,
+      DailyTimeCalculation dailyTimeCalculation)
     {
       this.timeProvider = timeProvider;
       this.noteFactory = noteFactory;
@@ -35,17 +42,11 @@ namespace ViewModel.CentralPanelVMs
       timer.TimeChanged += OnTimerTimeChanged;
     }
 
-    public event EventHandler<System.EventArgs> StartTimerRequested;
-
-    public event EventHandler<TimeSpan> StopTimerRequested;
-
-    public event EventHandler<System.EventArgs> ItemsPositionChanged;
-
-    public ObservableCollection<NoteVM> Notes => notes;
+    public ObservableCollection<NoteVM> Notes { get; private set; }
 
     public void InitializeNotes(IList<Note> source)
     {
-      notes = new ObservableCollection<NoteVM>(source.Select(n => CreateNoteVM(n)));
+      Notes = new ObservableCollection<NoteVM>(source.Select(n => CreateNoteVM(n)));
       OnPropertyChanged(nameof(Notes));
     }
 
@@ -77,13 +78,13 @@ namespace ViewModel.CentralPanelVMs
         default:
           throw new ArgumentOutOfRangeException(nameof(NoteCommands));
       }
-      mainRepository.SaveNotes(notes.Select(n => n.Model));
+      mainRepository.SaveNotes(Notes.Select(n => n.Model));
     }
 
     private void CreateNote(string text)
     {
       var note = noteFactory.CreateNote(text);
-      notes.Add(new NoteVM {Model = note});
+      Notes.Add(new NoteVM {Model = note});
       OnPropertyChanged(nameof(Notes));
       ItemsPositionChanged?.Invoke(this, System.EventArgs.Empty);
     }
@@ -93,7 +94,7 @@ namespace ViewModel.CentralPanelVMs
       var note = noteFactory.CreateTask(text, timeProvider.Now);
       var noteVM = CreateNoteVM(note);
       runningNoteVM = noteVM;
-      notes.Add(CreateNoteVM(note));
+      Notes.Add(CreateNoteVM(note));
       OnPropertyChanged(nameof(Notes));
       StartTimerRequested?.Invoke(this, System.EventArgs.Empty);
       ItemsPositionChanged?.Invoke(this, System.EventArgs.Empty);
@@ -102,7 +103,7 @@ namespace ViewModel.CentralPanelVMs
     private void PauseTask(TimeSpan elapsedTimer)
     {
       var timePaused = timeProvider.Now;
-      var noteVM = notes.Single(n => n.Model.State == NoteState.TimerRunning);
+      var noteVM = Notes.Single(n => n.Model.State == NoteState.TimerRunning);
       var updatedNote = noteFactory.PausedTask(noteVM.Model, timePaused, elapsedTimer);
       var updatedVM = CreateNoteVM(updatedNote);
       runningNoteVM = null;
@@ -113,7 +114,7 @@ namespace ViewModel.CentralPanelVMs
 
     private void ResumeTask()
     {
-      var noteVM = notes.LastOrDefault(n => n.Model.State == NoteState.TimerPaused);
+      var noteVM = Notes.LastOrDefault(n => n.Model.State == NoteState.TimerPaused);
       if (noteVM == null)
       {
         return;
@@ -137,7 +138,7 @@ namespace ViewModel.CentralPanelVMs
     private void StopTask(TimeSpan elapsedTimer)
     {
       var timeStopped = timeProvider.Now;
-      var noteVM = notes.Single(n => n.Model.State == NoteState.TimerRunning);
+      var noteVM = Notes.Single(n => n.Model.State == NoteState.TimerRunning);
       var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
       var updatedVM = CreateNoteVM(updatedNote);
       runningNoteVM = null;
@@ -148,7 +149,7 @@ namespace ViewModel.CentralPanelVMs
     private void Shutdown(TimeSpan elapsedTimer)
     {
       var timeStopped = timeProvider.Now;
-      var noteVM = notes.SingleOrDefault(n => n.Model.State == NoteState.TimerRunning);
+      var noteVM = Notes.SingleOrDefault(n => n.Model.State == NoteState.TimerRunning);
       if (noteVM != null)
       {
         var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
@@ -156,15 +157,15 @@ namespace ViewModel.CentralPanelVMs
         runningNoteVM = null;
         UpdateNoteVMInPlace(noteVM, updatedVM);
       }
-      mainRepository.SaveNotes(notes.Select(n => n.Model));
+      mainRepository.SaveNotes(Notes.Select(n => n.Model));
     }
 
     private void UpdateNoteVMInPlace(NoteVM oldNote, NoteVM newNote)
     {
-      int index = notes.IndexOf(oldNote);
-      notes.RemoveAt(index);
+      int index = Notes.IndexOf(oldNote);
+      Notes.RemoveAt(index);
       oldNote.ToggleRunningStateRequested -= OnNoteToggleRunningStateRequested;
-      notes.Insert(index, newNote);
+      Notes.Insert(index, newNote);
       OnPropertyChanged(nameof(Notes));
     }
 
