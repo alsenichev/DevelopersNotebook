@@ -39,6 +39,8 @@ namespace ViewModel.CentralPanelVMs
 
     public event EventHandler<TimeSpan> StopTimerRequested;
 
+    public event EventHandler<System.EventArgs> ItemsPositionChanged;
+
     public ObservableCollection<NoteVM> Notes => notes;
 
     public void InitializeNotes(IList<Note> source)
@@ -83,6 +85,7 @@ namespace ViewModel.CentralPanelVMs
       var note = noteFactory.CreateNote(text);
       notes.Add(new NoteVM {Model = note});
       OnPropertyChanged(nameof(Notes));
+      ItemsPositionChanged?.Invoke(this, System.EventArgs.Empty);
     }
 
     private void CreateNewTask(string text)
@@ -93,6 +96,7 @@ namespace ViewModel.CentralPanelVMs
       notes.Add(CreateNoteVM(note));
       OnPropertyChanged(nameof(Notes));
       StartTimerRequested?.Invoke(this, System.EventArgs.Empty);
+      ItemsPositionChanged?.Invoke(this, System.EventArgs.Empty);
     }
 
     private void PauseTask(TimeSpan elapsedTimer)
@@ -104,6 +108,7 @@ namespace ViewModel.CentralPanelVMs
       runningNoteVM = null;
       UpdateNoteVMInPlace(noteVM, updatedVM);
       StopTimerRequested?.Invoke(this, timer.Elapsed);
+      ItemsPositionChanged?.Invoke(this, System.EventArgs.Empty);
     }
 
     private void ResumeTask()

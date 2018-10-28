@@ -1,4 +1,5 @@
-﻿using CookbookMVVM;
+﻿using System;
+using CookbookMVVM;
 using ViewModel.BottomPanelVMs;
 using ViewModel.CentralPanelVMs;
 using ViewModel.TotalCounterVMs;
@@ -7,6 +8,13 @@ namespace ViewModel.MainWindowVMs
 {
   public class MainWindowVM : ViewModelBase
   {
+
+    public event EventHandler<System.EventArgs> ScrollDownRequested
+    {
+      add => centralPanelVM.ItemsPositionChanged += value;
+      remove => centralPanelVM.ItemsPositionChanged -= value;
+    }
+
     private readonly IBottomPanelVM bottomPanelVM;
     private readonly ICentralPanelVM centralPanelVM;
     private readonly ITotalCounterVM totalCounterVM;

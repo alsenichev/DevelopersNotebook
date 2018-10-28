@@ -16,7 +16,14 @@ namespace DevelopersNotebook
     {
       DataContext = mainWindowVM;
       this.mainWindowVM = mainWindowVM;
+      this.mainWindowVM.ScrollDownRequested += OnMainWindowVMScrollDownRequested;
       InitializeComponent();
+    }
+
+    private void OnMainWindowVMScrollDownRequested(object sender, EventArgs e)
+    {
+      mainListBox.Items.MoveCurrentToLast();
+      mainListBox.ScrollIntoView(mainListBox.Items.CurrentItem);
     }
 
     protected override void OnClosing(CancelEventArgs e)

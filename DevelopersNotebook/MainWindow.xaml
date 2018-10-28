@@ -25,6 +25,7 @@
     <ListBox
       Grid.Row="1"
       Grid.Column="0"
+      x:Name="mainListBox"
       DataContext="{Binding CentralPanelVM}"
       HorizontalContentAlignment="Stretch"
       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
