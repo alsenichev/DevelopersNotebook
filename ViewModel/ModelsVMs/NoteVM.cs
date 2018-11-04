@@ -27,7 +27,7 @@ namespace ViewModel.ModelsVMs
 
     private void ExecuteToggleRunningState()
     {
-      ToggleRunningStateRequested?.Invoke(this, System.EventArgs.Empty);
+      ToggleRunningStateRequested?.Invoke(this, EventArgs.Empty);
     }
 
     public void UpdateDuration(TimeSpan duration)

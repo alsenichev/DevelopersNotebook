@@ -52,7 +52,8 @@ namespace ViewModel.CentralPanelVMs
       var note = noteFactory.CreateTask(text, timeProvider.Now);
       var noteVM = CreateNoteVM(note);
       runningNoteVM = noteVM;
-      PlaceToLast(CreateNoteVM(note));
+      runningNoteVM.UpdateDuration(TimeSpan.Zero);//display a counter immediately
+      PlaceToLast(noteVM);
     }
 
     public void ContinueTask(NoteVM noteVM)
@@ -60,6 +61,7 @@ namespace ViewModel.CentralPanelVMs
       var updatedNote = noteFactory.ResumedTask(noteVM.Model);
       var updatedVM = CreateNoteVM(updatedNote);
       runningNoteVM = updatedVM;
+      runningNoteVM.UpdateDuration(TimeSpan.Zero);//display a counter immediately
       PlaceToLast(updatedVM, noteVM);
     }
 
@@ -101,7 +103,7 @@ namespace ViewModel.CentralPanelVMs
 
     private NoteVM CreateNoteVM(Note model)
     {
-      var result = new NoteVM{Model=model};
+      var result = new NoteVM{ Model = model };
       result.ToggleRunningStateRequested += OnNoteToggleRunningStateRequested;
       return result;
     }
