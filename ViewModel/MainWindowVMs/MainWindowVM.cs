@@ -9,12 +9,7 @@ namespace ViewModel.MainWindowVMs
 {
   public class MainWindowVM : ViewModelBase
   {
-
-    public event EventHandler<System.EventArgs> ScrollDownRequested
-    {
-      add => CentralPanelVM.ItemsPositionChanged += value;
-      remove => CentralPanelVM.ItemsPositionChanged -= value;
-    }
+    public event EventHandler<EventArgs> ScrollDownRequested;
 
     private readonly IInputController inputController;
 
@@ -24,9 +19,10 @@ namespace ViewModel.MainWindowVMs
       ITotalCounterVM totalCounterVM,
       IInputController inputController)
     {
-      this.BottomPanelVM = bottomPanelVM;
-      this.CentralPanelVM = centralPanelVM;
-      this.TotalCounterVM = totalCounterVM;
+      BottomPanelVM = bottomPanelVM;
+      CentralPanelVM = centralPanelVM;
+      CentralPanelVM.NoteCommandReceived += RequestScrollDown;
+      TotalCounterVM = totalCounterVM;
       this.inputController = inputController;
     }
 
@@ -39,6 +35,11 @@ namespace ViewModel.MainWindowVMs
     public void PrepareToShutdownApplication()
     {
       inputController.PrepareToShutdownApplication();
+    }
+
+    public void RequestScrollDown(object sender, EventArgs e)
+    {
+      ScrollDownRequested?.Invoke(this, EventArgs.Empty);
     }
   }
 }

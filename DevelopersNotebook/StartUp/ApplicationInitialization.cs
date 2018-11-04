@@ -6,6 +6,7 @@ using Domain.BusinessRules.Services;
 using Domain.Interfaces;
 using log4net;
 using ViewModel.CentralPanelVMs;
+using ViewModel.MainWindowVMs;
 using ViewModel.TotalCounterVMs;
 
 namespace DevelopersNotebook.StartUp
@@ -23,13 +24,20 @@ namespace DevelopersNotebook.StartUp
     private readonly ITotalCounterVM totalCounterVM;
     private readonly IMainRepository mainRepository;
     private readonly DailyTimeCalculation dailyTimeCalculation;
+    private readonly MainWindowVM mainWindowVM;
 
-    public ApplicationInitialization(ICentralPanelVM centralPanelVM, IMainRepository mainRepository, DailyTimeCalculation dailyTimeCalculation, ITotalCounterVM totalCounterVM)
+    public ApplicationInitialization(
+      ICentralPanelVM centralPanelVM,
+      IMainRepository mainRepository,
+      DailyTimeCalculation dailyTimeCalculation,
+      ITotalCounterVM totalCounterVM,
+      MainWindowVM mainWindowVM)
     {
       this.centralPanelVM = centralPanelVM;
       this.mainRepository = mainRepository;
       this.dailyTimeCalculation = dailyTimeCalculation;
       this.totalCounterVM = totalCounterVM;
+      this.mainWindowVM = mainWindowVM;
     }
 
     public void InitializeBeforeShowingTheWindow()
@@ -56,12 +64,12 @@ namespace DevelopersNotebook.StartUp
 
     public void InitializeAfterShowingTheWindow()
     {
-      //TODO - scroll down to the last item.
+      mainWindowVM.RequestScrollDown(this, EventArgs.Empty);
     }
 
     public void LogAndDisplayError(string message)
     {
-      // TODO need to notify the user somehow
+      // TODO need to notify a user somehow
       logger.Error(message);
     }
 
