@@ -1,6 +1,5 @@
 ﻿using System;
 using CookbookMVVM;
-using ViewModel.Enums;
 
 namespace ViewModel.TotalCounterVMs
 {

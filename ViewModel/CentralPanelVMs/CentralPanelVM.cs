@@ -43,11 +43,11 @@ namespace ViewModel.CentralPanelVMs
     {
       var noteVMs = source.Select(n => CreateNoteVM(n));
       Notes = new ObservableCollection<NoteVM>(noteVMs);
-      GroupNoteByDate();
+      GroupNotesByDate();
       OnPropertyChanged(nameof(Notes));
     }
 
-    private void GroupNoteByDate()
+    private void GroupNotesByDate()
     {
       DateTime date = DateTime.MinValue;
       foreach (var vm in Notes)
@@ -73,12 +73,12 @@ namespace ViewModel.CentralPanelVMs
       PlaceToLast(noteVM);
     }
 
-    public void CreateNewTask(string text)
+    public void CreateTask(string text)
     {
       var note = noteFactory.CreateTask(text, timeProvider.Now);
       var noteVM = CreateNoteVM(note);
       runningNoteVM = noteVM;
-      runningNoteVM.UpdateDuration(TimeSpan.Zero);//display a counter immediately
+      runningNoteVM.UpdateDuration(TimeSpan.Zero);// will immediately display a counter
       PlaceToLast(noteVM);
     }
 
@@ -87,30 +87,20 @@ namespace ViewModel.CentralPanelVMs
       var updatedNote = noteFactory.ResumedTask(noteVM.Model);
       var updatedVM = CreateNoteVM(updatedNote);
       runningNoteVM = updatedVM;
-      runningNoteVM.UpdateDuration(TimeSpan.Zero);//display a counter immediately
+      runningNoteVM.UpdateDuration(TimeSpan.Zero);// will immediately display a counter
       PlaceToLast(updatedVM, noteVM);
     }
 
     public void StopTask(TimeSpan elapsedTimer)
     {
       var timeStopped = timeProvider.Now;
-      var noteVM = Notes.Single(n => n.Model.State == NoteState.TimerRunning);
-      var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
-      var updatedVM = CreateNoteVM(updatedNote);
-      runningNoteVM = null;
-      PlaceToLast(updatedVM, noteVM);//TODO - update in place.
-    }
-
-    public void StopAnyRunningTask(TimeSpan elapsedTimer)
-    {
-      var timeStopped = timeProvider.Now;
       var noteVM = Notes.SingleOrDefault(n => n.Model.State == NoteState.TimerRunning);
       if (noteVM != null)
       {
         var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
-        var updatedVM = new NoteVM { Model = updatedNote };
+        var updatedVM = CreateNoteVM(updatedNote);
         runningNoteVM = null;
-        PlaceToLast(updatedVM, noteVM);
+        PlaceToLast(updatedVM, noteVM); //TODO update in place (there may be notes below)
       }
     }
 
@@ -123,7 +113,7 @@ namespace ViewModel.CentralPanelVMs
         oldNote.ToggleRunningStateRequested -= OnNoteToggleRunningStateRequested;
       }
       Notes.Add(newNote);
-      GroupNoteByDate();
+      GroupNotesByDate();
       OnPropertyChanged(nameof(Notes));
       ItemsPositionChanged?.Invoke(this,EventArgs.Empty);
     }

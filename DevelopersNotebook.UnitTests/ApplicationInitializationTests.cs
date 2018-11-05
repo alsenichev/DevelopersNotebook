@@ -44,7 +44,9 @@ namespace DevelopersNotebook.UnitTests
       repository.Setup(r => r.LoadNotes()).Returns(new[] {note});
       var centralPanel = new Mock<ICentralPanelVM>();
       var init = CreateApplicationInitialization(centralPanel.Object, repository.Object);
+
       init.InitializeBeforeShowingTheWindow();
+
       centralPanel.Verify(p =>
           p.InitializeNotes(It.Is<IList<Note>>(l => l[0].State == NoteState.TimerStopped)),
           Times.Once);

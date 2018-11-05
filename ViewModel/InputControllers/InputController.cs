@@ -41,7 +41,7 @@ namespace ViewModel.InputControllers
     {
       if (timer.IsRunning)
       {
-        centralPanelVM.StopAnyRunningTask(timer.Elapsed);
+        centralPanelVM.StopTask(timer.Elapsed);
         timer.Stop();
       }
 
@@ -64,7 +64,7 @@ namespace ViewModel.InputControllers
             timer.Reset();
           }
 
-          centralPanelVM.CreateNewTask(e.InputText);
+          centralPanelVM.CreateTask(e.InputText);
           timer.Start();
           break;
         case TextInputCommand.StopTask:
@@ -111,7 +111,7 @@ namespace ViewModel.InputControllers
       }
       else
       {
-        centralPanelVM.CreateNewTask(sourceTask.Header);
+        centralPanelVM.CreateTask(sourceTask.Header);
         timer.Start();
       }
     }

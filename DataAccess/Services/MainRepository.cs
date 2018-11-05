@@ -6,11 +6,10 @@ using System.Reflection;
 using DataAccess.Mappings;
 using DataAccess.Models;
 using Domain.Interfaces;
-using Domain.Models;
 using log4net;
 using Newtonsoft.Json;
 using DataAccessNote = DataAccess.Models.Note;
-using DomainNote=Domain.Models.Note;
+using DomainNote = Domain.Models.Note;
 
 namespace DataAccess.Services
 {
@@ -21,6 +20,7 @@ namespace DataAccess.Services
 
     private static readonly ILog logger =
       LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
     private readonly string filePath = Path.Combine(DestinationFolder, FileName);
     private readonly ITimeProvider timeProvider;
 

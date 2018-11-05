@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using Domain.Models;
 using ViewModel.ModelsVMs;
 
@@ -19,14 +18,10 @@ namespace ViewModel.CentralPanelVMs
 
     void CreateNote(string text);
 
-    void CreateNewTask(string text);
+    void CreateTask(string text);
 
     void ContinueTask(NoteVM noteVM);
 
     void StopTask(TimeSpan elapsedTimer);
-
-    void StopAnyRunningTask(TimeSpan elapsedTimer);
-
-    event PropertyChangedEventHandler PropertyChanged;
   }
 }
