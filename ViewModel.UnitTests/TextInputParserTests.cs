@@ -33,5 +33,14 @@ namespace ViewModel.UnitTests
       Assert.AreEqual(TextInputCommand.PinNote, command);
       Assert.AreEqual("Some text", text);
     }
+
+    [Test]
+    public void NoSpecialSymbols_IsParsedCorrectly()
+    {
+      var (command, text) =
+        TextInputParser.ParseText("  The text  ");
+      Assert.AreEqual(TextInputCommand.CreateNote, command);
+      Assert.AreEqual("The text", text);
+    }
   }
 }
