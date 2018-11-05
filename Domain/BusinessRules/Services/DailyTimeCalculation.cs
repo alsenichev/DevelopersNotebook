@@ -10,12 +10,12 @@ namespace Domain.BusinessRules.Services
   {
     //TODO move to Settings, make customizable
     private const int offsetFromMidnight = 5;
-
-    private readonly DateTime startOfTheDay;
+    private readonly TimeSpan timeOfStartOfTheDay = TimeSpan.FromHours(offsetFromMidnight);
+    private readonly DateTime startOfToday;
 
     public DailyTimeCalculation(ITimeProvider timeProvider)
     {
-      startOfTheDay = timeProvider.Now.Date.AddHours(offsetFromMidnight);
+      startOfToday = timeProvider.Now.Date + timeOfStartOfTheDay;
     }
 
     public TimeSpan CalculateTimeForToday(IList<Note> notes)
@@ -32,12 +32,12 @@ namespace Domain.BusinessRules.Services
 
     public bool IsTodaysTask(Note task)
     {
-      return task.StartedAt > startOfTheDay;
+      return task.StartedAt >= startOfToday;
     }
 
     public DateTime GetTaskDate(Note task)
     {
-      return task.StartedAt.Hour > offsetFromMidnight
+      return task.StartedAt.TimeOfDay >= timeOfStartOfTheDay
         ? task.StartedAt.Date
         : task.StartedAt.Date.AddDays(-1);
     }
