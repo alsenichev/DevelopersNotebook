@@ -11,8 +11,8 @@ namespace DevelopersNotebook
   /// </summary>
   public partial class MainWindow : Window
   {
-    private MainWindowVM mainWindowVM;
-    public MainWindow(MainWindowVM mainWindowVM)
+    private IMainWindowVM mainWindowVM;
+    public MainWindow(IMainWindowVM mainWindowVM)
     {
       DataContext = mainWindowVM;
       this.mainWindowVM = mainWindowVM;

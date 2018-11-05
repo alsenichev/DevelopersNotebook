@@ -13,10 +13,10 @@ namespace Domain.Services
         $"Started at {timeStarted}", text, NoteState.TimerRunning, timeStarted, TimeSpan.Zero);
     }
 
-    public Note CreateNote(string text)
+    public Note CreateNote(string text, DateTime timeCreated)
     {
       return new Note(
-        "", text, NoteState.Unknown, DateTime.MinValue, TimeSpan.Zero);
+        "", text, NoteState.Unknown, timeCreated, TimeSpan.Zero);
     }
 
     public Note PausedTask(Note note, DateTime timePaused, TimeSpan elapsedTimer)

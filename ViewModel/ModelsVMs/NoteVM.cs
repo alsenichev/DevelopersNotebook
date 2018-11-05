@@ -22,6 +22,14 @@ namespace ViewModel.ModelsVMs
 
     public bool IsRunning => Model.State == NoteState.TimerRunning;
 
+    public bool IsFirstInADay { get; private set; }
+
+    public void SetIsFirstInADay(bool isFirst)
+    {
+      IsFirstInADay = isFirst;
+      OnPropertyChanged(nameof(IsFirstInADay));
+    }
+
     public ICommand ToggleRunningState =>
       toggleRunningState ?? (toggleRunningState = new RelayCommand(ExecuteToggleRunningState));
 

@@ -9,6 +9,7 @@ using Domain.Services;
 using Moq;
 using NUnit.Framework;
 using ViewModel.CentralPanelVMs;
+using ViewModel.MainWindowVMs;
 using ViewModel.TotalCounterVMs;
 
 namespace DevelopersNotebook.UnitTests
@@ -19,7 +20,8 @@ namespace DevelopersNotebook.UnitTests
     private ApplicationInitialization CreateApplicationInitialization(
       ICentralPanelVM centralPanelVM = null,
       IMainRepository mainRepository = null,
-      ITotalCounterVM totalCounterVM = null)
+      ITotalCounterVM totalCounterVM = null,
+      IMainWindowVM mainWindowVM = null)
     {
       if (totalCounterVM == null)
       {
@@ -29,7 +31,8 @@ namespace DevelopersNotebook.UnitTests
         centralPanelVM ?? new Mock<ICentralPanelVM>().Object,
         mainRepository ?? new Mock<IMainRepository>().Object,
         new DailyTimeCalculation(new TimeProvider()),
-        totalCounterVM);
+        totalCounterVM,
+        mainWindowVM ?? new Mock<IMainWindowVM>().Object);
     }
 
     [Test]

@@ -64,6 +64,7 @@
     <Compile Include="BottomPanelVMs\IBottomPanelVM.cs" />
     <Compile Include="InputControllers\IInputController.cs" />
     <Compile Include="InputControllers\InputController.cs" />
+    <Compile Include="MainWindowVMs\IMainWindowVM.cs" />
     <Compile Include="TotalCounterVMs\ITotalCounterVM.cs" />
     <Compile Include="MainWindowVMs\MainWindowVM.cs" />
     <Compile Include="BottomPanelVMs\BottomPanelVM.cs" />

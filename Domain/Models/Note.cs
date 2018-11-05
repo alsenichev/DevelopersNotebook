@@ -47,7 +47,8 @@ namespace Domain.Models
         Text,
         Header,
         State == NoteState.TimerRunning ? NoteState.TimerStopped : State,
-        StartedAt,Duration);
+        StartedAt == DateTime.MinValue? DateTime.Now : StartedAt,
+        Duration);
     }
     #endregion
 

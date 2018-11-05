@@ -7,7 +7,7 @@ using ViewModel.TotalCounterVMs;
 
 namespace ViewModel.MainWindowVMs
 {
-  public class MainWindowVM : ViewModelBase
+  public class MainWindowVM : ViewModelBase, IMainWindowVM
   {
     public event EventHandler<EventArgs> ScrollDownRequested;
 

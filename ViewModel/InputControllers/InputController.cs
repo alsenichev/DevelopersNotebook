@@ -91,21 +91,20 @@ namespace ViewModel.InputControllers
     private void HandleNoteCommand(object sender, EventArgs e)
     {
       var sourceTask = (NoteVM) sender;
+      bool sourceIsRunning = sourceTask.IsRunning;
       if (timer.IsRunning)
       {
-        bool sourceIsRunning = sourceTask.IsRunning;
         centralPanelVM.StopTask(timer.Elapsed);
         totalCounterVM.UpdateCounter(timer.Elapsed);
         timer.Stop();
         timer.Reset();
-        if (!sourceIsRunning)
+        if (sourceIsRunning)
         {
-          // source was not running means some other task requested start
-          centralPanelVM.ContinueTask(sourceTask);
-          timer.Start();
+          // source was running means we just need to stop the task
+          return;
         }
       }
-      else if (dailyTimeCalculation.IsTodaysTask(sourceTask.Model))
+      if (dailyTimeCalculation.IsTodaysTask(sourceTask.Model))
       {
         centralPanelVM.ContinueTask((NoteVM) sender);
         timer.Start();

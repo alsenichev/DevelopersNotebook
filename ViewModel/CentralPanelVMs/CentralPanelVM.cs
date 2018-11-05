@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CookbookMVVM;
+using Domain.BusinessRules.Services;
 using Domain.Enums;
 using Domain.Interfaces;
 using Domain.Models;
@@ -19,17 +20,20 @@ namespace ViewModel.CentralPanelVMs
     private readonly ITimeProvider timeProvider;
     private readonly INoteFactory noteFactory;
     private readonly IReadOnlyTimer timer;
+    private readonly DailyTimeCalculation dailyTimeCalculation;
 
     private NoteVM runningNoteVM;
 
     public CentralPanelVM(
       ITimeProvider timeProvider,
       INoteFactory noteFactory,
-      IReadOnlyTimer timer)
+      IReadOnlyTimer timer,
+      DailyTimeCalculation dailyTimeCalculation)
     {
       this.timeProvider = timeProvider;
       this.noteFactory = noteFactory;
       this.timer = timer;
+      this.dailyTimeCalculation = dailyTimeCalculation;
       timer.TimeChanged += OnTimerTimeChanged;
     }
 
@@ -37,14 +41,36 @@ namespace ViewModel.CentralPanelVMs
 
     public void InitializeNotes(IList<Note> source)
     {
-      Notes = new ObservableCollection<NoteVM>(source.Select(n => CreateNoteVM(n)));
+      var noteVMs = source.Select(n => CreateNoteVM(n));
+      Notes = new ObservableCollection<NoteVM>(noteVMs);
+      GroupNoteByDate();
       OnPropertyChanged(nameof(Notes));
+    }
+
+    private void GroupNoteByDate()
+    {
+      DateTime date = DateTime.MinValue;
+      foreach (var vm in Notes)
+      {
+        vm.SetIsFirstInADay(false);
+        var taskStarted = dailyTimeCalculation.GetTaskDate(vm.Model);
+        if (date == DateTime.MinValue)
+        {
+          date = taskStarted;
+        }
+        if (taskStarted > date)
+        {
+          vm.SetIsFirstInADay(true);
+          date = taskStarted;
+        }
+      }
     }
 
     public void CreateNote(string text)
     {
-      var note = noteFactory.CreateNote(text);
-      PlaceToLast(new NoteVM {Model = note});
+      var note = noteFactory.CreateNote(text, timeProvider.Now);
+      var noteVM = new NoteVM{Model = note};
+      PlaceToLast(noteVM);
     }
 
     public void CreateNewTask(string text)
@@ -72,7 +98,7 @@ namespace ViewModel.CentralPanelVMs
       var updatedNote = noteFactory.StoppedTask(noteVM.Model, timeStopped, elapsedTimer);
       var updatedVM = CreateNoteVM(updatedNote);
       runningNoteVM = null;
-      PlaceToLast(updatedVM, noteVM);
+      PlaceToLast(updatedVM, noteVM);//TODO - update in place.
     }
 
     public void StopAnyRunningTask(TimeSpan elapsedTimer)
@@ -97,6 +123,7 @@ namespace ViewModel.CentralPanelVMs
         oldNote.ToggleRunningStateRequested -= OnNoteToggleRunningStateRequested;
       }
       Notes.Add(newNote);
+      GroupNoteByDate();
       OnPropertyChanged(nameof(Notes));
       ItemsPositionChanged?.Invoke(this,EventArgs.Empty);
     }

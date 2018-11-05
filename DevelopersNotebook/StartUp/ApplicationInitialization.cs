@@ -24,14 +24,14 @@ namespace DevelopersNotebook.StartUp
     private readonly ITotalCounterVM totalCounterVM;
     private readonly IMainRepository mainRepository;
     private readonly DailyTimeCalculation dailyTimeCalculation;
-    private readonly MainWindowVM mainWindowVM;
+    private readonly IMainWindowVM mainWindowVM;
 
     public ApplicationInitialization(
       ICentralPanelVM centralPanelVM,
       IMainRepository mainRepository,
       DailyTimeCalculation dailyTimeCalculation,
       ITotalCounterVM totalCounterVM,
-      MainWindowVM mainWindowVM)
+      IMainWindowVM mainWindowVM)
     {
       this.centralPanelVM = centralPanelVM;
       this.mainRepository = mainRepository;

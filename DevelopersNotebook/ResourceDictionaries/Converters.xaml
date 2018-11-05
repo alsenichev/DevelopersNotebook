@@ -3,5 +3,6 @@
                     xmlns:converters="clr-namespace:DevelopersNotebook.Converters">
     <converters:BoolToIconConverter x:Key="BoolToIconConverter" />
     <converters:NoteStatusConverter x:Key="NoteStatusConverter"/>
-  <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    <converters:NoteTopMarginConverter x:Key="NoteTopMarginConverter"/>
 </ResourceDictionary>

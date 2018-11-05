@@ -7,7 +7,7 @@ namespace Domain.Interfaces
   {
     Note CreateTask(string text, DateTime timeStarted);
 
-    Note CreateNote(string text);
+    Note CreateNote(string text, DateTime timeCreated);
 
     Note PausedTask(Note model, DateTime timeStopped, TimeSpan elapsedTimer);
 

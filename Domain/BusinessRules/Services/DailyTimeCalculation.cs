@@ -34,5 +34,12 @@ namespace Domain.BusinessRules.Services
     {
       return task.StartedAt > startOfTheDay;
     }
+
+    public DateTime GetTaskDate(Note task)
+    {
+      return task.StartedAt.Hour > offsetFromMidnight
+        ? task.StartedAt.Date
+        : task.StartedAt.Date.AddDays(-1);
+    }
   }
 }
