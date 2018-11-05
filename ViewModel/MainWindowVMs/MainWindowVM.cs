@@ -21,7 +21,7 @@ namespace ViewModel.MainWindowVMs
     {
       BottomPanelVM = bottomPanelVM;
       CentralPanelVM = centralPanelVM;
-      CentralPanelVM.NoteCommandReceived += RequestScrollDown;
+      CentralPanelVM.ItemsPositionChanged += RequestScrollDown;
       TotalCounterVM = totalCounterVM;
       this.inputController = inputController;
     }
